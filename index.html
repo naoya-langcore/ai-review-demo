@@ -33,7 +33,7 @@ body{font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN','Meiryo',sans-serif;
 .k-table .row-num{width:40px;text-align:center;color:#999;background:#fafbfc}
 .k-table .row-highlight{background:#fff8e1}
 
-.k-detail{max-width:960px;margin:0 auto;padding:16px}
+.k-detail{max-width:1280px;margin:0 auto;padding:16px}
 .k-detail-header{background:#fff;border:1px solid #e3e7ee;border-radius:4px;padding:16px 20px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
 .k-group{background:#fff;border:1px solid #e3e7ee;border-radius:4px;margin-bottom:10px;overflow:hidden}
 .k-group-header{background:#f5f6f7;border-bottom:1px solid #e3e7ee;padding:10px 16px;font-size:13px;font-weight:700;color:#333;cursor:pointer;display:flex;align-items:center;gap:8px;user-select:none}
@@ -277,23 +277,34 @@ function App(){
           <button className="k-nav-btn primary" onClick={runSingle} disabled={reviewing}>{reviewing?"審査中...":"AI審査を実行"}</button>
         </div>
 
-        <KGroup title="生徒情報" fields={[["姓",selApp.student.lastName],["名",selApp.student.firstName],["姓（カナ）",selApp.student.lastNameKana],["名（カナ）",selApp.student.firstNameKana],["生年月日",selApp.student.birthDate],["学校名",SCHOOLS[selApp.schoolIdx]],["学年",selApp.student.grade+"年"],["入学年度",selApp.student.enrollYear+"年"],["入学月",selApp.student.enrollMonth+"月"]]} warns={curState?.result?.findings}/>
-        <KGroup title="申請者情報" fields={[["姓",selApp.applicant.lastName],["名",selApp.applicant.firstName],["姓（カナ）",selApp.applicant.lastNameKana],["名（カナ）",selApp.applicant.firstNameKana],["続柄",selApp.applicant.relationship],["住所",selApp.applicant.address]]} warns={curState?.result?.findings}/>
-        <KGroup title="口座情報" fields={[["金融機関名",selApp.bank.bankName],["支店名",selApp.bank.branchName],["口座番号",selApp.bank.accountNumber],["口座名義カナ",selApp.bank.holderKana]]} warns={curState?.result?.findings}/>
-        <KGroup title="在籍確認・助成額" fields={[["在籍確認",selApp.enrollment.status],["年間授業料",selApp.tuition.annual.toLocaleString()+"円"],["助成額",selApp.subsidy.amount.toLocaleString()+"円"]]} warns={curState?.result?.findings}/>
-
-        {reviewing&&<div className="k-progress"><div style={{display:"flex",alignItems:"center",gap:8}}><Sp/><span style={{fontSize:12,fontWeight:600,color:"#2980b9"}}>{progress<30?"申請データを確認中...":progress<60?"OpenAI APIで審査中...":progress<90?"分析中...":"結果生成中..."}</span></div><div className="k-progress-bar"><div className="k-progress-fill" style={{width:`${progress}%`}}/></div></div>}
-
-        {error&&!reviewing&&<div style={{background:"#fdf0ef",border:"1px solid #f5b7b1",borderRadius:4,padding:12,marginBottom:12,color:"#c0392b",fontSize:12}}>エラー：{error}</div>}
-
-        {curState?.result&&!reviewing&&<div id="res">
-          <div className="k-result-divider"><div className="line"/><div className="label">AI審査結果（OpenAI）</div><div className="line"/></div>
-          <div style={{display:"flex",gap:12,marginBottom:12}}>
-            <div className="k-score"><div className={`k-score-num ${curState.result.overall!=="OK"?"warn":""}`}>{curState.result.score}</div><div style={{fontSize:10,color:"#999"}}>スコア</div><div style={{marginTop:4}}><span className={`k-status ${curState.result.overall==="OK"?"k-status-approved":"k-status-rejected"}`}>{curState.result.overall}</span></div></div>
-            <div className="k-group" style={{flex:1,marginBottom:0}}><div className="k-group-header">AI総合コメント</div><div style={{padding:12,fontSize:13,lineHeight:1.7}}>{curState.result.summary}</div></div>
+        <div style={{display:"flex",gap:16,alignItems:"flex-start"}}>
+          {/* 左カラム：申請データ */}
+          <div style={{flex:1,minWidth:0}}>
+            <KGroup title="生徒情報" fields={[["姓",selApp.student.lastName],["名",selApp.student.firstName],["姓（カナ）",selApp.student.lastNameKana],["名（カナ）",selApp.student.firstNameKana],["生年月日",selApp.student.birthDate],["学校名",SCHOOLS[selApp.schoolIdx]],["学年",selApp.student.grade+"年"],["入学年度",selApp.student.enrollYear+"年"],["入学月",selApp.student.enrollMonth+"月"]]} warns={curState?.result?.findings}/>
+            <KGroup title="申請者情報" fields={[["姓",selApp.applicant.lastName],["名",selApp.applicant.firstName],["姓（カナ）",selApp.applicant.lastNameKana],["名（カナ）",selApp.applicant.firstNameKana],["続柄",selApp.applicant.relationship],["住所",selApp.applicant.address]]} warns={curState?.result?.findings}/>
+            <KGroup title="口座情報" fields={[["金融機関名",selApp.bank.bankName],["支店名",selApp.bank.branchName],["口座番号",selApp.bank.accountNumber],["口座名義カナ",selApp.bank.holderKana]]} warns={curState?.result?.findings}/>
+            <KGroup title="在籍確認・助成額" fields={[["在籍確認",selApp.enrollment.status],["年間授業料",selApp.tuition.annual.toLocaleString()+"円"],["助成額",selApp.subsidy.amount.toLocaleString()+"円"]]} warns={curState?.result?.findings}/>
           </div>
-          <div className="k-group"><div className="k-group-header">検出事項</div><div style={{padding:10}}>{(curState.result.findings||[]).map((f,i)=><div key={i} className={`k-finding k-finding-${f.severity}`}><div style={{display:"flex",alignItems:"center",gap:6,marginBottom:3}}><span className="k-flag" style={{background:f.severity==="error"?"#fdf0ef":f.severity==="warning"?"#fef9f0":"#e8f4fd",color:f.severity==="error"?"#c0392b":f.severity==="warning"?"#e67e22":"#2980b9"}}>{f.severity==="error"?"不整合":f.severity==="warning"?"確認推奨":"情報"}</span><span style={{fontSize:11,color:"#666"}}>{f.category}</span>{f.field&&<span style={{fontSize:10,color:"#999",background:"#f5f6f7",padding:"1px 5px",borderRadius:3}}>{f.field}</span>}</div><div style={{fontSize:12,lineHeight:1.7,color:"#555",paddingLeft:8}}>{f.message}</div></div>)}</div></div>
-        </div>}
+
+          {/* 右カラム：審査結果 */}
+          <div style={{width:420,minWidth:420,position:"sticky",top:64}}>
+            {reviewing&&<div className="k-progress"><div style={{display:"flex",alignItems:"center",gap:8}}><Sp/><span style={{fontSize:12,fontWeight:600,color:"#2980b9"}}>{progress<30?"申請データを確認中...":progress<60?"OpenAI APIで審査中...":progress<90?"分析中...":"結果生成中..."}</span></div><div className="k-progress-bar"><div className="k-progress-fill" style={{width:`${progress}%`}}/></div></div>}
+
+            {error&&!reviewing&&<div style={{background:"#fdf0ef",border:"1px solid #f5b7b1",borderRadius:4,padding:12,marginBottom:12,color:"#c0392b",fontSize:12}}>エラー：{error}</div>}
+
+            {!curState?.result&&!reviewing&&!error&&<div className="k-group" style={{padding:20,textAlign:"center",color:"#999",fontSize:13}}>
+              <div style={{fontSize:28,marginBottom:8}}>&#128269;</div>
+              <div>「AI審査を実行」ボタンを押すと</div>
+              <div>ここに審査結果が表示されます</div>
+            </div>}
+
+            {curState?.result&&!reviewing&&<div id="res">
+              <div className="k-score" style={{marginBottom:12}}><div className={`k-score-num ${curState.result.overall!=="OK"?"warn":""}`}>{curState.result.score}</div><div style={{fontSize:10,color:"#999"}}>スコア</div><div style={{marginTop:4}}><span className={`k-status ${curState.result.overall==="OK"?"k-status-approved":"k-status-rejected"}`}>{curState.result.overall}</span></div></div>
+              <div className="k-group" style={{marginBottom:12}}><div className="k-group-header">AI総合コメント</div><div style={{padding:12,fontSize:13,lineHeight:1.7}}>{curState.result.summary}</div></div>
+              <div className="k-group"><div className="k-group-header">検出事項（{(curState.result.findings||[]).length}件）</div><div style={{padding:10}}>{(curState.result.findings||[]).map((f,i)=><div key={i} className={`k-finding k-finding-${f.severity}`}><div style={{display:"flex",alignItems:"center",gap:6,marginBottom:3}}><span className="k-flag" style={{background:f.severity==="error"?"#fdf0ef":f.severity==="warning"?"#fef9f0":"#e8f4fd",color:f.severity==="error"?"#c0392b":f.severity==="warning"?"#e67e22":"#2980b9"}}>{f.severity==="error"?"不整合":f.severity==="warning"?"確認推奨":"情報"}</span><span style={{fontSize:11,color:"#666"}}>{f.category}</span>{f.field&&<span style={{fontSize:10,color:"#999",background:"#f5f6f7",padding:"1px 5px",borderRadius:3}}>{f.field}</span>}</div><div style={{fontSize:12,lineHeight:1.7,color:"#555",paddingLeft:8}}>{f.message}</div></div>)}</div></div>
+            </div>}
+          </div>
+        </div>
         <div style={{height:30}}/>
       </div>}
     </div>
