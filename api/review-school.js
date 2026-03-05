@@ -39,8 +39,10 @@ export default async function handler(req, res) {
     const prompt = `あなたは私立中学校授業料支援助成金の審査AIです。同一学校「${schoolName}」の申請データ${applications.length}件を横断的にチェックしてください。
 
 ## 横断チェック項目
-1. 授業料外れ値：同一学校内の年間授業料の中央値を求め、中央値の±70%を超える申請はerror、±30%を超える申請はwarningとする
-2. 重複申請：生徒の姓名＋生年月日が完全一致する申請が複数ある場合、重複として検出する
+1. 在籍確認：在籍確認が「在籍中」でない申請がある場合、問題として検出する（type: "enrollment_issue"）
+2. 授業料外れ値：同一学校内の年間授業料の中央値を求め、中央値の±70%を超える申請はerror、±30%を超える申請はwarningとする（type: "tuition_outlier"）
+3. 助成額超過：助成額が年間授業料を超えている申請を検出する（type: "subsidy_excess"）
+4. 重複申請：生徒の姓名＋生年月日が完全一致する申請が複数ある場合、重複として検出する（type: "duplicate"）
 
 ## 申請データ一覧
 ${JSON.stringify(applications, null, 2)}
@@ -52,7 +54,7 @@ ${JSON.stringify(applications, null, 2)}
 {
   "issues": [
     {
-      "type": "tuition_outlier" または "duplicate",
+      "type": "enrollment_issue" または "tuition_outlier" または "subsidy_excess" または "duplicate",
       "title": "問題のタイトル（日本語）",
       "message": "詳細な説明（日本語、具体的な数値や受付番号を含めること）",
       "ids": ["該当する受付番号の配列"]

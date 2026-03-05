@@ -87,35 +87,37 @@ const {useState,useCallback,useMemo} = React;
 const SCHOOLS=["○○学園中学校","△△中学校","□□学院中学校"];
 
 // データ生成ヘルパー
-const mk=(id,si,sLn,sFn,sLk,sFk,sBd,gr,ey,em,aLn,aFn,aLk,aFk,rel,addr,bBk,bBr,bNo,bHk,tA)=>({
+const mk=(id,si,sLn,sFn,sLk,sFk,sBd,gr,ey,em,aLn,aFn,aLk,aFk,rel,addr,bBk,bBr,bNo,bHk,tA,enSt,subA)=>({
   id,schoolIdx:si,
   student:{lastName:sLn,firstName:sFn,lastNameKana:sLk,firstNameKana:sFk,birthDate:sBd,grade:gr,enrollYear:ey,enrollMonth:em},
   applicant:{lastName:aLn,firstName:aFn,lastNameKana:aLk,firstNameKana:aFk,relationship:rel,address:addr},
   bank:{bankName:bBk,branchName:bBr,accountNumber:bNo,holderKana:bHk},
-  tuition:{annual:tA}
+  tuition:{annual:tA},
+  enrollment:{status:enSt},
+  subsidy:{amount:subA}
 });
 
 const allApps=[
   // R07-0001: 正常（○○学園中学校）
-  mk("R07-0001",0,"佐藤","美咲","サトウ","ミサキ","2012-04-15",3,2022,4,"佐藤","健一","サトウ","ケンイチ","父","東京都渋谷区神宮前2-3-4","みずほ銀行","渋谷支店","1234567","サトウ ケンイチ",420000),
+  mk("R07-0001",0,"佐藤","美咲","サトウ","ミサキ","2012-04-15",3,2022,4,"佐藤","健一","サトウ","ケンイチ","父","東京都渋谷区神宮前2-3-4","みずほ銀行","渋谷支店","1234567","サトウ ケンイチ",420000,"在籍中",100000),
   // R07-0002: 正常（○○学園中学校）
-  mk("R07-0002",0,"高橋","さくら","タカハシ","サクラ","2011-09-03",3,2022,4,"高橋","誠","タカハシ","マコト","父","東京都渋谷区広尾1-2-3","三菱UFJ銀行","広尾支店","2345678","タカハシ マコト",420000),
+  mk("R07-0002",0,"高橋","さくら","タカハシ","サクラ","2011-09-03",3,2022,4,"高橋","誠","タカハシ","マコト","父","東京都渋谷区広尾1-2-3","三菱UFJ銀行","広尾支店","2345678","タカハシ マコト",420000,"在籍中",100000),
   // R07-0003: 正常（△△中学校）
-  mk("R07-0003",1,"吉田","陽菜","ヨシダ","ハルナ","2012-07-22",2,2023,4,"吉田","浩二","ヨシダ","コウジ","父","東京都新宿区新宿3-4-5","三井住友銀行","新宿支店","3456789","ヨシダ コウジ",396000),
+  mk("R07-0003",1,"吉田","陽菜","ヨシダ","ハルナ","2012-07-22",2,2023,4,"吉田","浩二","ヨシダ","コウジ","父","東京都新宿区新宿3-4-5","三井住友銀行","新宿支店","3456789","ヨシダ コウジ",396000,"在籍中",100000),
   // R07-0004: 正常（□□学院中学校）
-  mk("R07-0004",2,"山本","蒼","ヤマモト","アオ","2013-01-08",1,2024,4,"山本","智子","ヤマモト","トモコ","母","東京都港区芝5-6-7","りそな銀行","芝支店","4567890","ヤマモト トモコ",480000),
-  // R07-0005: 授業料外れ値 35,000円（○○学園中学校）
-  mk("R07-0005",0,"伊藤","蓮","イトウ","レン","2011-11-30",3,2022,4,"伊藤","直美","イトウ","ナオミ","母","東京都渋谷区渋谷1-2-3","みずほ銀行","渋谷支店","5678901","イトウ ナオミ",35000),
-  // R07-0006: 重複申請・母（△△中学校）加藤大翔
-  mk("R07-0006",1,"加藤","大翔","カトウ","ヒロト","2008-02-18",3,2022,4,"加藤","明美","カトウ","アケミ","母","東京都豊島区南大塚2-5-8","三菱UFJ銀行","池袋支店","6789012","カトウ アケミ",396000),
+  mk("R07-0004",2,"山本","蒼","ヤマモト","アオ","2013-01-08",1,2024,4,"山本","智子","ヤマモト","トモコ","母","東京都港区芝5-6-7","りそな銀行","芝支店","4567890","ヤマモト トモコ",480000,"在籍中",120000),
+  // R07-0005: 授業料外れ値 35,000円 + 助成額が授業料超過（○○学園中学校）
+  mk("R07-0005",0,"伊藤","蓮","イトウ","レン","2011-11-30",3,2022,4,"伊藤","直美","イトウ","ナオミ","母","東京都渋谷区渋谷1-2-3","みずほ銀行","渋谷支店","5678901","イトウ ナオミ",35000,"在籍中",100000),
+  // R07-0006: 重複申請・母 + 退学済み（△△中学校）加藤大翔
+  mk("R07-0006",1,"加藤","大翔","カトウ","ヒロト","2008-02-18",3,2022,4,"加藤","明美","カトウ","アケミ","母","東京都豊島区南大塚2-5-8","三菱UFJ銀行","池袋支店","6789012","カトウ アケミ",396000,"退学済み",100000),
   // R07-0007: 重複申請・父（△△中学校）加藤大翔
-  mk("R07-0007",1,"加藤","大翔","カトウ","ヒロト","2008-02-18",3,2022,4,"加藤","太郎","カトウ","タロウ","父","東京都豊島区南大塚2-5-8","三菱UFJ銀行","池袋支店","7890123","カトウ タロウ",396000),
+  mk("R07-0007",1,"加藤","大翔","カトウ","ヒロト","2008-02-18",3,2022,4,"加藤","太郎","カトウ","タロウ","父","東京都豊島区南大塚2-5-8","三菱UFJ銀行","池袋支店","7890123","カトウ タロウ",396000,"在籍中",100000),
   // R07-0008: 姓不一致（○○学園中学校）生徒:鈴木 / 申請者:山田
-  mk("R07-0008",0,"鈴木","翔太","スズキ","ショウタ","2012-05-14",2,2023,4,"山田","裕子","ヤマダ","ユウコ","母","東京都渋谷区上原4-7-2","三井住友銀行","代々木支店","8901234","ヤマダ ユウコ",420000),
+  mk("R07-0008",0,"鈴木","翔太","スズキ","ショウタ","2012-05-14",2,2023,4,"山田","裕子","ヤマダ","ユウコ","母","東京都渋谷区上原4-7-2","三井住友銀行","代々木支店","8901234","ヤマダ ユウコ",420000,"在籍中",100000),
   // R07-0009: 正常（△△中学校）
-  mk("R07-0009",1,"中村","悠真","ナカムラ","ユウマ","2012-03-11",2,2023,4,"中村","真理子","ナカムラ","マリコ","母","東京都豊島区西池袋1-3-7","りそな銀行","池袋支店","9012345","ナカムラ マリコ",396000),
+  mk("R07-0009",1,"中村","悠真","ナカムラ","ユウマ","2012-03-11",2,2023,4,"中村","真理子","ナカムラ","マリコ","母","東京都豊島区西池袋1-3-7","りそな銀行","池袋支店","9012345","ナカムラ マリコ",396000,"在籍中",100000),
   // R07-0010: 正常（□□学院中学校）
-  mk("R07-0010",2,"松本","陽向","マツモト","ヒナタ","2013-06-25",1,2024,4,"松本","恵","マツモト","メグミ","母","東京都港区麻布十番2-1-4","三菱UFJ銀行","麻布支店","0123456","マツモト メグミ",480000),
+  mk("R07-0010",2,"松本","陽向","マツモト","ヒナタ","2013-06-25",1,2024,4,"松本","恵","マツモト","メグミ","母","東京都港区麻布十番2-1-4","三菱UFJ銀行","麻布支店","0123456","マツモト メグミ",480000,"在籍中",120000),
 ];
 
 const stCls={"未審査":"k-status-pending","審査中":"k-status-reviewing","承認":"k-status-approved","差戻し":"k-status-rejected"};
@@ -154,7 +156,7 @@ function App(){
         申請者姓:selApp.applicant.lastName,申請者名:selApp.applicant.firstName,申請者姓カナ:selApp.applicant.lastNameKana,申請者名カナ:selApp.applicant.firstNameKana,
         続柄:selApp.applicant.relationship,住所:selApp.applicant.address,
         銀行名:selApp.bank.bankName,支店名:selApp.bank.branchName,口座番号:selApp.bank.accountNumber,口座名義カナ:selApp.bank.holderKana,
-        年間授業料:selApp.tuition.annual
+        在籍確認:selApp.enrollment.status,年間授業料:selApp.tuition.annual,助成額:selApp.subsidy.amount
       };
       const res=await fetch('/api/review',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({applicationData})});
       clearInterval(intv);setProgress(100);
@@ -172,7 +174,7 @@ function App(){
     setSchReviewing(true);setSchProgress(10);setError(null);
     const intv=setInterval(()=>setSchProgress(p=>Math.min(p+6,85)),500);
     try{
-      const apps=schoolApps.map(a=>({受付番号:a.id,生徒姓:a.student.lastName,生徒名:a.student.firstName,生年月日:a.student.birthDate,申請者姓:a.applicant.lastName,申請者名:a.applicant.firstName,続柄:a.applicant.relationship,年間授業料:a.tuition.annual}));
+      const apps=schoolApps.map(a=>({受付番号:a.id,生徒姓:a.student.lastName,生徒名:a.student.firstName,生年月日:a.student.birthDate,申請者姓:a.applicant.lastName,申請者名:a.applicant.firstName,続柄:a.applicant.relationship,在籍確認:a.enrollment.status,年間授業料:a.tuition.annual,助成額:a.subsidy.amount}));
       const res=await fetch('/api/review-school',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({schoolName:SCHOOLS[schoolIdx],applications:apps})});
       clearInterval(intv);setSchProgress(100);
       if(!res.ok){const e=await res.json();throw new Error(e.error||'API error')}
@@ -212,7 +214,7 @@ function App(){
         </div>
         <div>
           <table className="k-table">
-            <thead><tr><th className="row-num">#</th><th>ステータス</th><th>受付番号</th><th>学校名</th><th>生徒名</th><th>申請者名</th><th>年間授業料</th><th>審査フラグ</th></tr></thead>
+            <thead><tr><th className="row-num">#</th><th>ステータス</th><th>受付番号</th><th>学校名</th><th>生徒名</th><th>申請者名</th><th>在籍確認</th><th>年間授業料</th><th>助成額</th><th>審査フラグ</th></tr></thead>
             <tbody>{filtered.map((a,i)=>{const st=appStates[a.id];return(
               <tr key={a.id} onClick={()=>goDetail(a)}>
                 <td className="row-num">{i+1}</td>
@@ -221,7 +223,9 @@ function App(){
                 <td>{SCHOOLS[a.schoolIdx]}</td>
                 <td style={{fontWeight:500}}>{a.student.lastName} {a.student.firstName}</td>
                 <td>{a.applicant.lastName} {a.applicant.firstName}</td>
+                <td style={{color:a.enrollment.status!=="在籍中"?"#c0392b":"#333",fontWeight:a.enrollment.status!=="在籍中"?700:400}}>{a.enrollment.status}</td>
                 <td style={{textAlign:"right"}}>{a.tuition.annual.toLocaleString()}円</td>
+                <td style={{textAlign:"right"}}>{a.subsidy.amount.toLocaleString()}円</td>
                 <td>{st.flag?<span className="k-flag">{st.flag}</span>:<span style={{color:"#ccc"}}>—</span>}</td>
               </tr>)})}</tbody>
           </table>
@@ -238,9 +242,9 @@ function App(){
         </div>
         <div>
           <table className="k-table">
-            <thead><tr><th className="row-num">#</th><th>ステータス</th><th>受付番号</th><th>生徒名</th><th>学年</th><th>申請者</th><th>続柄</th><th>年間授業料</th><th>審査フラグ</th></tr></thead>
-            <tbody>{schoolApps.map((a,i)=>{const st=appStates[a.id];const isO=schResult?.some(r=>r.type==="tuition_outlier"&&r.ids?.includes(a.id));const isD=schResult?.some(r=>r.type==="duplicate"&&r.ids?.includes(a.id));return(
-              <tr key={a.id} onClick={()=>goDetail(a)} className={(isO||isD)?"row-highlight":""}>
+            <thead><tr><th className="row-num">#</th><th>ステータス</th><th>受付番号</th><th>生徒名</th><th>学年</th><th>申請者</th><th>続柄</th><th>在籍確認</th><th>年間授業料</th><th>助成額</th><th>審査フラグ</th></tr></thead>
+            <tbody>{schoolApps.map((a,i)=>{const st=appStates[a.id];const isO=schResult?.some(r=>r.type==="tuition_outlier"&&r.ids?.includes(a.id));const isD=schResult?.some(r=>r.type==="duplicate"&&r.ids?.includes(a.id));const isE=schResult?.some(r=>r.type==="enrollment_issue"&&r.ids?.includes(a.id));return(
+              <tr key={a.id} onClick={()=>goDetail(a)} className={(isO||isD||isE)?"row-highlight":""}>
                 <td className="row-num">{i+1}</td>
                 <td><span className={`k-status ${stCls[st.status]}`}>{st.status}</span></td>
                 <td style={{fontWeight:600,color:"#3498db"}}>{a.id}</td>
@@ -248,7 +252,9 @@ function App(){
                 <td>{a.student.grade}年</td>
                 <td>{a.applicant.lastName} {a.applicant.firstName}</td>
                 <td>{a.applicant.relationship}</td>
+                <td style={{color:a.enrollment.status!=="在籍中"?"#c0392b":"#333",fontWeight:a.enrollment.status!=="在籍中"?700:400}}>{a.enrollment.status}{isE&&<span className="k-flag" style={{marginLeft:4}}>要確認</span>}</td>
                 <td style={{fontWeight:isO?700:400,color:isO?"#c0392b":"#333",textAlign:"right"}}>{a.tuition.annual.toLocaleString()}円{isO&&<span className="k-flag" style={{marginLeft:4}}>外れ値</span>}</td>
+                <td style={{textAlign:"right"}}>{a.subsidy.amount.toLocaleString()}円</td>
                 <td>{st.flag?<span className="k-flag">{st.flag}</span>:"—"}</td>
               </tr>)})}</tbody>
           </table>
@@ -274,7 +280,7 @@ function App(){
         <KGroup title="生徒情報" fields={[["姓",selApp.student.lastName],["名",selApp.student.firstName],["姓（カナ）",selApp.student.lastNameKana],["名（カナ）",selApp.student.firstNameKana],["生年月日",selApp.student.birthDate],["学校名",SCHOOLS[selApp.schoolIdx]],["学年",selApp.student.grade+"年"],["入学年度",selApp.student.enrollYear+"年"],["入学月",selApp.student.enrollMonth+"月"]]} warns={curState?.result?.findings}/>
         <KGroup title="申請者情報" fields={[["姓",selApp.applicant.lastName],["名",selApp.applicant.firstName],["姓（カナ）",selApp.applicant.lastNameKana],["名（カナ）",selApp.applicant.firstNameKana],["続柄",selApp.applicant.relationship],["住所",selApp.applicant.address]]} warns={curState?.result?.findings}/>
         <KGroup title="口座情報" fields={[["金融機関名",selApp.bank.bankName],["支店名",selApp.bank.branchName],["口座番号",selApp.bank.accountNumber],["口座名義カナ",selApp.bank.holderKana]]} warns={curState?.result?.findings}/>
-        <KGroup title="授業料" fields={[["年間授業料",selApp.tuition.annual.toLocaleString()+"円"]]} warns={curState?.result?.findings}/>
+        <KGroup title="在籍確認・助成額" fields={[["在籍確認",selApp.enrollment.status],["年間授業料",selApp.tuition.annual.toLocaleString()+"円"],["助成額",selApp.subsidy.amount.toLocaleString()+"円"]]} warns={curState?.result?.findings}/>
 
         {reviewing&&<div className="k-progress"><div style={{display:"flex",alignItems:"center",gap:8}}><Sp/><span style={{fontSize:12,fontWeight:600,color:"#2980b9"}}>{progress<30?"申請データを確認中...":progress<60?"OpenAI APIで審査中...":progress<90?"分析中...":"結果生成中..."}</span></div><div className="k-progress-bar"><div className="k-progress-fill" style={{width:`${progress}%`}}/></div></div>}
 
