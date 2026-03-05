@@ -12,14 +12,12 @@
 body{font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN','Meiryo',sans-serif;color:#333;background:#f5f6f7;font-size:14px}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* kintone header bar */
 .k-header{height:48px;background:#fff;border-bottom:1px solid #e3e7ee;display:flex;align-items:center;padding:0 16px;position:sticky;top:0;z-index:100}
 .k-header-bar{position:absolute;top:0;left:0;right:0;height:4px;background:#3498db}
 .k-header-title{font-size:16px;font-weight:700;color:#333;margin-left:8px}
 .k-header-sub{font-size:12px;color:#999;margin-left:12px}
 .k-back{background:none;border:none;cursor:pointer;font-size:20px;color:#3498db;padding:4px 8px;margin-right:4px}
 
-/* kintone nav bar (under header) */
 .k-nav{height:40px;background:#f5f6f7;border-bottom:1px solid #e3e7ee;display:flex;align-items:center;padding:0 16px;gap:8px}
 .k-nav-btn{background:#fff;border:1px solid #e3e7ee;border-radius:4px;padding:6px 14px;font-size:12px;cursor:pointer;color:#333;font-weight:500}
 .k-nav-btn:hover{background:#e8f4fd;border-color:#3498db}
@@ -27,16 +25,14 @@ body{font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN','Meiryo',sans-serif;
 .k-nav-btn.primary:hover{background:#2980b9}
 .k-nav-btn:disabled{opacity:0.5;cursor:default}
 
-/* kintone table */
 .k-table{width:100%;border-collapse:collapse;background:#fff;font-size:13px}
-.k-table thead th{background:#f5f6f7;border:1px solid #e3e7ee;padding:8px 12px;text-align:left;font-weight:600;color:#666;font-size:11px;white-space:nowrap;position:sticky;top:88px;z-index:10}
+.k-table thead th{background:#f5f6f7;border:1px solid #e3e7ee;padding:8px 12px;text-align:left;font-weight:600;color:#666;font-size:11px;white-space:nowrap;position:sticky;top:48px;z-index:10}
 .k-table tbody td{border:1px solid #e3e7ee;padding:8px 12px;color:#333}
 .k-table tbody tr{cursor:pointer}
 .k-table tbody tr:hover{background:#e8f4fd}
 .k-table .row-num{width:40px;text-align:center;color:#999;background:#fafbfc}
 .k-table .row-highlight{background:#fff8e1}
 
-/* kintone record detail */
 .k-detail{max-width:960px;margin:0 auto;padding:16px}
 .k-detail-header{background:#fff;border:1px solid #e3e7ee;border-radius:4px;padding:16px 20px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
 .k-group{background:#fff;border:1px solid #e3e7ee;border-radius:4px;margin-bottom:10px;overflow:hidden}
@@ -50,17 +46,14 @@ body{font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN','Meiryo',sans-serif;
 .k-field-warn .k-field-label{color:#e67e22;background:#fef9f0}
 .k-field-warn .k-field-value{color:#d35400;background:#fef9f0;font-weight:600}
 
-/* status badges */
 .k-status{display:inline-block;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600}
 .k-status-pending{background:#f0f1f4;color:#999}
 .k-status-reviewing{background:#e8f4fd;color:#2980b9}
 .k-status-approved{background:#eafaf1;color:#27ae60}
 .k-status-rejected{background:#fdf0ef;color:#e74c3c}
 
-/* flag */
 .k-flag{font-size:10px;padding:1px 6px;border-radius:3px;background:#fdf0ef;color:#c0392b;font-weight:600}
 
-/* result area */
 .k-result-divider{display:flex;align-items:center;gap:10px;margin:20px 0 14px}
 .k-result-divider .line{flex:1;height:1px;background:#e3e7ee}
 .k-result-divider .label{padding:6px 16px;background:#e8f4fd;border-radius:20px;font-size:12px;font-weight:700;color:#2980b9}
@@ -70,27 +63,14 @@ body{font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN','Meiryo',sans-serif;
 .k-finding-warning{border-left-color:#f39c12}
 .k-finding-info{border-left-color:#3498db}
 
-/* progress */
 .k-progress{background:#fff;border:1px solid #bde0fe;border-radius:4px;padding:14px 18px;margin-bottom:12px}
 .k-progress-bar{width:100%;height:4px;background:#e3e7ee;border-radius:2px;overflow:hidden;margin-top:8px}
 .k-progress-fill{height:100%;background:linear-gradient(90deg,#3498db,#2980b9);border-radius:2px;transition:width 0.3s}
 
-/* docs */
-.k-doc{flex:1;border:1px solid #e3e7ee;border-radius:4px;overflow:hidden;text-align:center}
-.k-doc-preview{height:90px;background:#f5f6f7;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px}
-.k-doc-label{padding:6px;border-top:1px solid #e3e7ee;font-size:10px;color:#999}
-
-/* score */
 .k-score{text-align:center;padding:16px;background:#fff;border:2px solid #e3e7ee;border-radius:4px;min-width:100px}
 .k-score-num{font-size:32px;font-weight:800;color:#27ae60}
 .k-score-num.warn{color:#e67e22}
 
-/* OCR match */
-.k-match{flex:1;padding:8px;border-radius:4px;text-align:center;border:1px solid #e3e7ee}
-.k-match-ok{background:#eafaf1;border-color:#a3d9a5}
-.k-match-ng{background:#fef9f0;border-color:#f5cba7}
-
-/* filter area */
 .k-filter{display:flex;align-items:center;gap:10px;padding:12px 16px;background:#fff;border-bottom:1px solid #e3e7ee}
 .k-select{padding:5px 10px;border-radius:4px;border:1px solid #e3e7ee;font-size:12px;background:#fff}
 
@@ -104,44 +84,41 @@ body{font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN','Meiryo',sans-serif;
 <script type="text/babel">
 const {useState,useCallback,useMemo} = React;
 
-const SCHOOLS=["○○学園高等学校","△△高等学校","□□学院高等学校"];
-const CHECK_ITEMS=["学校名が生徒証と一致しているか","生徒名：生徒証・住民票と一致、カナ誤入力チェック","生年月日が住民票と一致しているか","学年・入学年月の整合性確認","申請者名が住民票にあるか、カナ誤入力チェック","続柄：住民票で父または母と確認できるか","口座名義人（画像）が申請者名と一致するか","口座名義人カナ（入力）と口座名義人（画像）の一致","口座番号：入力と画像が一致しているか","申請者住所が住民票住所と一致するか","生徒が申請者と同世帯か","住民票：A4全体が見えているか","住民票 住民となった日：令和7年5月1日以前か","住民票 発行日：令和7年5月1日以降か"];
+const SCHOOLS=["○○学園中学校","△△中学校","□□学院中学校"];
 
-const mk=(id,si,rec,sLn,sFn,sLk,sFk,sBd,gr,ey,em,aLn,aFn,aLk,aFk,rel,post,pref,city,town,st,bld,hp,dp,dcn,bBk,bBr,bTy,bNo,bHlk,bHfk,tA,tD,tC,tT,docs,ocr)=>({id,schoolIdx:si,recNo:rec,student:{lastName:sLn,firstName:sFn,lastNameKana:sLk,firstNameKana:sFk,birthDate:sBd,grade:gr,enrollYear:ey,enrollMonth:em},applicant:{lastName:aLn,firstName:aFn,lastNameKana:aLk,firstNameKana:aFk,relationship:rel},address:{postalCode:post,prefecture:pref,city,town,street:st,building:bld,homePhone:hp,dayPhone:dp,dayContactName:dcn},bank:{bankName:bBk,branchName:bBr,accountType:bTy,accountNumber:bNo,holderLastNameKana:bHlk,holderFirstNameKana:bHfk},tuition:{annual:tA,determined:tD,confirmed:tC,transfer:tT},enrollment:"在籍中",docs,ocr});
+// データ生成ヘルパー
+const mk=(id,si,sLn,sFn,sLk,sFk,sBd,gr,ey,em,aLn,aFn,aLk,aFk,rel,addr,bBk,bBr,bNo,bHk,tA)=>({
+  id,schoolIdx:si,
+  student:{lastName:sLn,firstName:sFn,lastNameKana:sLk,firstNameKana:sFk,birthDate:sBd,grade:gr,enrollYear:ey,enrollMonth:em},
+  applicant:{lastName:aLn,firstName:aFn,lastNameKana:aLk,firstNameKana:aFk,relationship:rel,address:addr},
+  bank:{bankName:bBk,branchName:bBr,accountNumber:bNo,holderKana:bHk},
+  tuition:{annual:tA}
+});
 
 const allApps=[
-  mk("R07-0001",0,"REC-10001","田中","太郎","タナカ","タロウ","2008-04-15",2,2023,4,"田中","花子","タナカ","ハナコ","母","160-0023","東京都","新宿区","西新宿","2-8-1","新宿グランドタワー301","03-1234-5678","090-1234-5678","田中 花子","三菱UFJ銀行","新宿支店","普通","1234567","タナカ","ハナコ",420000,118800,118800,118800,["住民票","生徒証","通帳"],{jN:"田中 花子",jA:"東京都新宿区西新宿2-8-1 新宿グランドタワー301",jI:"令和7年5月15日",jRA:"令和2年4月1日",jRS:"令和2年4月1日",jM:[{n:"田中 一郎",r:"世帯主",b:"1975-06-10"},{n:"田中 花子",r:"妻",b:"1978-03-22"},{n:"田中 太郎",r:"子",b:"2008-04-15"}],sN:"田中 太郎",sS:SCHOOLS[0],sG:"2年",bB:"三菱UFJ銀行",bR:"新宿支店",bNo:"1234567",bH:"タナカ ハナコ"}),
-  mk("R07-0002",0,"REC-10002","佐藤","美咲","サトウ","ミサキ","2008-08-22",2,2023,4,"佐藤","健一","サトウ","ケンイチ","父","160-0022","東京都","新宿区","新宿","3-5-6","","03-2222-3333","080-9876-5432","佐藤 健一","みずほ銀行","新宿支店","普通","7654321","サトウ","ケンイチ",420000,118800,118800,118800,["住民票","生徒証","通帳"],{jN:"佐藤 健一",jA:"東京都新宿区新宿3-5-6",jI:"令和7年5月10日",jRA:"平成27年3月15日",jRS:"平成27年3月15日",jM:[{n:"佐藤 健一",r:"世帯主",b:"1980-02-14"},{n:"佐藤 由美",r:"妻",b:"1982-07-08"},{n:"佐藤 美咲",r:"子",b:"2008-08-22"}],sN:"佐藤 美咲",sS:SCHOOLS[0],sG:"2年",bB:"みずほ銀行",bR:"新宿支店",bNo:"7654321",bH:"サトウ ケンイチ"}),
-  mk("R07-0003",0,"REC-10003","鈴木","翔太","スズキ","ショウタ","2007-07-20",3,2022,4,"山田","裕子","ヤマダ","ユウコ","母","169-0075","東京都","新宿区","高田馬場","1-2-3","高田馬場ハイツ205","03-3333-4444","070-1111-2222","山田 裕子","千葉銀行","新宿支店","普通","246813","ヤマダ","ユウコ",420000,118800,118800,118800,["住民票","生徒証","通帳"],{jN:"山田 裕子",jA:"東京都新宿区高田馬場1-2-3 高田馬場ハイツ205",jI:"令和7年5月20日",jRA:"令和元年6月1日",jRS:"令和元年6月1日",jM:[{n:"山田 裕子",r:"世帯主",b:"1982-09-05"},{n:"山田 翔太",r:"子",b:"2007-07-20",x:true}],sN:"鈴木 翔太",sS:SCHOOLS[0],sG:"3年",bB:"千葉銀行",bR:"新宿支店",bNo:"2468135",bH:"ヤマダ ユウコ",xN:true}),
-  mk("R07-0004",0,"REC-10004","高橋","さくら","タカハシ","サクラ","2009-01-30",1,2024,4,"高橋","誠","タカハシ","マコト","父","161-0033","東京都","新宿区","下落合","4-5-6","","03-5555-6666","03-5555-6666","高橋 誠","三井住友銀行","新宿西口支店","普通","9988776","タカハシ","マコト",420000,118800,118800,118800,["住民票","生徒証","通帳"],{jN:"高橋 誠",jA:"東京都新宿区下落合4-5-6",jI:"令和7年5月18日",jRA:"平成20年9月1日",jRS:"平成20年9月1日",jM:[{n:"高橋 誠",r:"世帯主",b:"1976-12-01"},{n:"高橋 美紀",r:"妻",b:"1979-05-18"},{n:"高橋 さくら",r:"子",b:"2009-01-30"}],sN:"高橋 さくら",sS:SCHOOLS[0],sG:"1年",bB:"三井住友銀行",bR:"新宿西口支店",bNo:"9988776",bH:"タカハシ マコト"}),
-  mk("R07-0005",0,"REC-10005","渡辺","陸","ワタナベ","リク","2008-12-05",2,2023,4,"渡辺","恵美","ワタナベ","エミ","祖母","162-0065","東京都","新宿区","住吉町","8-10","コーポ住吉102","","090-5555-6666","渡辺 恵美","ゆうちょ銀行","〇一八支店","普通","12345678","ワタナベ","リク",420000,118800,118800,118800,["住民票","生徒証","カード"],{jN:"渡辺 恵美",jA:"東京都新宿区住吉町8-10 コーポ住吉102",jI:"令和7年5月12日",jRA:"平成10年4月1日",jRS:"平成21年1月10日",jM:[{n:"渡辺 恵美",r:"世帯主",b:"1955-03-17"},{n:"渡辺 陸",r:"孫",b:"2008-12-05"}],sN:"渡辺 陸",sS:SCHOOLS[0],sG:"2年",bB:"ゆうちょ銀行",bR:"〇一八支店",bNo:"12345678",bH:"ワタナベ リク",xH:true}),
-  mk("R07-0006",0,"REC-10006","伊藤","蓮","イトウ","レン","2009-03-11",1,2024,4,"伊藤","直美","イトウ","ナオミ","母","160-0004","東京都","新宿区","四谷","1-18","","03-6666-7777","080-3333-4444","伊藤 直美","りそな銀行","新宿支店","普通","5566778","イトウ","ナオミ",720300,118800,118800,118800,["住民票","生徒証","通帳"],{jN:"伊藤 直美",jA:"東京都新宿区四谷1-18",jI:"令和7年5月14日",jRA:"令和3年2月1日",jRS:"令和3年2月1日",jM:[{n:"伊藤 直美",r:"世帯主",b:"1985-11-20"},{n:"伊藤 蓮",r:"子",b:"2009-03-11"}],sN:"伊藤 蓮",sS:SCHOOLS[0],sG:"1年",bB:"りそな銀行",bR:"新宿支店",bNo:"5566778",bH:"イトウ ナオミ"}),
-  mk("R07-0007",0,"REC-10007","小林","結衣","コバヤシ","ユイ","2007-10-08",3,2022,4,"小林","大輔","コバヤシ","ダイスケ","父","160-0011","東京都","新宿区","若葉","2-1-5","若葉マンション508","03-7777-8888","090-7777-8888","小林 大輔","三菱UFJ銀行","四谷支店","普通","3344556","コバヤシ","ダイスケ",720300,118800,118800,118800,["住民票","生徒証","通帳"],{jN:"小林 大輔",jA:"東京都新宿区若葉2-1-5 若葉マンション508",jI:"令和7年5月16日",jRA:"平成25年7月1日",jRS:"平成25年7月1日",jM:[{n:"小林 大輔",r:"世帯主",b:"1978-04-22"},{n:"小林 恵子",r:"妻",b:"1980-01-15"},{n:"小林 結衣",r:"子",b:"2007-10-08"}],sN:"小林 結衣",sS:SCHOOLS[0],sG:"3年",bB:"三菱UFJ銀行",bR:"四谷支店",bNo:"3344556",bH:"コバヤシ ダイスケ"}),
-  mk("R07-0008",0,"REC-10008","中村","悠真","ナカムラ","ユウマ","2008-06-25",2,2023,4,"中村","真理子","ナカムラ","マリコ","母","162-0843","東京都","新宿区","市谷田町","3-8","市ヶ谷レジデンス401","03-8888-9999","080-8888-9999","中村 真理子","みずほ銀行","市ヶ谷支店","普通","1122334","ナカムラ","マリコ",420000,118800,118800,118800,["住民票","生徒証","通帳"],{jN:"中村 真理子",jA:"東京都新宿区市谷田町3-8 市ヶ谷レジデンス401",jI:"令和7年5月11日",jRA:"平成30年10月1日",jRS:"平成30年10月1日",jM:[{n:"中村 正人",r:"世帯主",b:"1977-12-03"},{n:"中村 真理子",r:"妻",b:"1980-08-19"},{n:"中村 悠真",r:"子",b:"2008-06-25"}],sN:"中村 悠真",sS:SCHOOLS[0],sG:"2年",bB:"みずほ銀行",bR:"市ヶ谷支店",bNo:"1122334",bH:"ナカムラ マリコ"}),
-  mk("R07-0009",0,"REC-10009","田中","太郎","タナカ","タロウ","2008-04-15",2,2023,4,"田中","一郎","タナカ","イチロウ","父","160-0023","東京都","新宿区","西新宿","2-8-1","新宿グランドタワー301","03-1234-5678","090-9999-0000","田中 一郎","三菱UFJ銀行","新宿支店","普通","1234567","タナカ","イチロウ",420000,118800,118800,118800,["住民票","生徒証","通帳"],{jN:"田中 一郎",jA:"東京都新宿区西新宿2-8-1 新宿グランドタワー301",jI:"令和7年5月15日",jRA:"令和2年4月1日",jRS:"令和2年4月1日",jM:[{n:"田中 一郎",r:"世帯主",b:"1975-06-10"},{n:"田中 花子",r:"妻",b:"1978-03-22"},{n:"田中 太郎",r:"子",b:"2008-04-15"}],sN:"田中 太郎",sS:SCHOOLS[0],sG:"2年",bB:"三菱UFJ銀行",bR:"新宿支店",bNo:"1234567",bH:"タナカ イチロウ"}),
-  mk("R07-0010",0,"REC-10010","松本","葵","マツモト","アオイ","2009-05-14",1,2024,4,"松本","健太","マツモト","ケンタ","父","163-0690","東京都","新宿区","西新宿","1-25-1","","03-0000-1111","080-0000-1111","松本 健太","三井住友銀行","新宿支店","普通","6677889","マツモト","ケンタ",420000,118800,118800,118800,["住民票","生徒証","通帳"],{jN:"松本 健太",jA:"東京都新宿区西新宿1-25-1",jI:"令和7年4月20日",jRA:"令和5年8月1日",jRS:"令和5年8月1日",jM:[{n:"松本 健太",r:"世帯主",b:"1983-09-30"},{n:"松本 由紀",r:"妻",b:"1986-02-11"},{n:"松本 葵",r:"子",b:"2009-05-14"}],sN:"松本 葵",sS:SCHOOLS[0],sG:"1年",bB:"三井住友銀行",bR:"新宿支店",bNo:"6677889",bH:"マツモト ケンタ"}),
-  mk("R07-0011",1,"REC-20001","加藤","大翔","カトウ","ヒロト","2008-02-18",2,2023,4,"加藤","明美","カトウ","アケミ","母","150-0001","東京都","渋谷区","神宮前","5-3-2","","03-1111-0000","090-1111-0000","加藤 明美","三菱UFJ銀行","渋谷支店","普通","9911223","カトウ","アケミ",396000,118800,118800,118800,["住民票","生徒証","通帳"],{jN:"加藤 明美",jA:"東京都渋谷区神宮前5-3-2",jI:"令和7年5月8日",jRA:"平成28年4月1日",jRS:"平成28年4月1日",jM:[{n:"加藤 明美",r:"世帯主",b:"1981-05-02"},{n:"加藤 大翔",r:"子",b:"2008-02-18"}],sN:"加藤 大翔",sS:SCHOOLS[1],sG:"2年",bB:"三菱UFJ銀行",bR:"渋谷支店",bNo:"9911223",bH:"カトウ アケミ"}),
-  mk("R07-0012",1,"REC-20002","吉田","陽菜","ヨシダ","ヒナ","2009-06-30",1,2024,4,"吉田","浩二","ヨシダ","コウジ","父","150-0002","東京都","渋谷区","渋谷","1-1-1","渋谷タワー1201","03-2222-0000","080-2222-0000","吉田 浩二","みずほ銀行","渋谷支店","普通","5544332","ヨシダ","コウジ",396000,118800,118800,118800,["住民票","生徒証","カード"],{jN:"吉田 浩二",jA:"東京都渋谷区渋谷1-1-1 渋谷タワー1201",jI:"令和7年5月5日",jRA:"令和元年11月1日",jRS:"令和元年11月1日",jM:[{n:"吉田 浩二",r:"世帯主",b:"1979-11-25"},{n:"吉田 恵",r:"妻",b:"1982-03-14"},{n:"吉田 陽菜",r:"子",b:"2009-06-30"}],sN:"吉田 陽菜",sS:SCHOOLS[1],sG:"1年",bB:"みずほ銀行",bR:"渋谷支店",bNo:"5544332",bH:"ヨシダ コウジ"}),
-  mk("R07-0013",1,"REC-20003","木村","颯","キムラ","ハヤテ","2007-11-12",3,2022,4,"木村","洋子","キムラ","ヨウコ","母","150-0031","東京都","渋谷区","桜丘町","26-1","","03-3333-0000","070-3333-0000","木村 洋子","三井住友銀行","渋谷駅前支店","普通","7788990","キムラ","ヨウコ",396000,118800,118800,118800,["住民票","生徒証","通帳"],{jN:"木村 洋子",jA:"東京都渋谷区桜丘町26-1",jI:"令和7年5月9日",jRA:"平成22年3月1日",jRS:"平成22年3月1日",jM:[{n:"木村 太一",r:"世帯主",b:"1975-08-15"},{n:"木村 洋子",r:"妻",b:"1978-12-04"},{n:"木村 颯",r:"子",b:"2007-11-12"}],sN:"木村 颯",sS:SCHOOLS[1],sG:"3年",bB:"三井住友銀行",bR:"渋谷駅前支店",bNo:"7788990",bH:"キムラ ヨウコ"}),
-  mk("R07-0014",1,"REC-20004","加藤","大翔","カトウ","ヒロト","2008-02-18",2,2023,4,"加藤","太郎","カトウ","タロウ","父","150-0001","東京都","渋谷区","神宮前","5-3-2","","03-1111-0000","080-5555-0000","加藤 太郎","三菱UFJ銀行","渋谷支店","普通","9911223","カトウ","タロウ",396000,118800,118800,118800,["住民票","生徒証","通帳"],{jN:"加藤 太郎",jA:"東京都渋谷区神宮前5-3-2",jI:"令和7年5月8日",jRA:"平成28年4月1日",jRS:"平成28年4月1日",jM:[{n:"加藤 太郎",r:"世帯主",b:"1978-09-12"},{n:"加藤 明美",r:"妻",b:"1981-05-02"},{n:"加藤 大翔",r:"子",b:"2008-02-18"}],sN:"加藤 大翔",sS:SCHOOLS[1],sG:"2年",bB:"三菱UFJ銀行",bR:"渋谷支店",bNo:"9911223",bH:"カトウ タロウ"}),
-  mk("R07-0015",2,"REC-30001","山本","蒼","ヤマモト","アオイ","2008-01-20",2,2023,4,"山本","智子","ヤマモト","トモコ","母","171-0021","東京都","豊島区","西池袋","1-6-1","","03-9999-0000","090-9999-1111","山本 智子","みずほ銀行","池袋支店","普通","4455667","ヤマモト","トモコ",480000,118800,118800,118800,["住民票","生徒証","通帳"],{jN:"山本 智子",jA:"東京都豊島区西池袋1-6-1",jI:"令和7年5月7日",jRA:"平成29年4月1日",jRS:"平成29年4月1日",jM:[{n:"山本 太一",r:"世帯主",b:"1976-04-08"},{n:"山本 智子",r:"妻",b:"1979-07-22"},{n:"山本 蒼",r:"子",b:"2008-01-20"}],sN:"山本 蒼",sS:SCHOOLS[2],sG:"2年",bB:"みずほ銀行",bR:"池袋支店",bNo:"4455667",bH:"ヤマモト トモコ"}),
-  mk("R07-0016",2,"REC-30002","清水","凛","シミズ","リン","2009-04-01",1,2024,4,"清水","剛","シミズ","ツヨシ","父","170-0013","東京都","豊島区","東池袋","3-1-1","サンシャイン60 2F","03-0000-2222","080-0000-2222","清水 剛","三菱UFJ銀行","池袋支店","普通","8899001","シミズ","ツヨシ",480000,118800,118800,118800,["住民票","生徒証","カード"],{jN:"清水 剛",jA:"東京都豊島区東池袋3-1-1 サンシャイン60 2F",jI:"令和7年5月6日",jRA:"令和4年6月1日",jRS:"令和4年6月1日",jM:[{n:"清水 剛",r:"世帯主",b:"1980-12-15"},{n:"清水 真由美",r:"妻",b:"1983-03-28"},{n:"清水 凛",r:"子",b:"2009-04-01"}],sN:"清水 凛",sS:SCHOOLS[2],sG:"1年",bB:"三菱UFJ銀行",bR:"池袋支店",bNo:"8899001",bH:"シミズ ツヨシ"}),
-  mk("R07-0017",2,"REC-30003","藤田","悠","フジタ","ハルカ","2007-08-17",3,2022,4,"藤田","恵","フジタ","メグミ","母","171-0031","東京都","豊島区","目白","2-5-3","","03-1111-3333","070-1111-3333","藤田 恵","三井住友銀行","目白支店","普通","3322110","フジタ","メグミ",480000,118800,118800,118800,["住民票","生徒証","通帳"],{jN:"藤田 恵",jA:"東京都豊島区目白2-5-3",jI:"令和7年5月10日",jRA:"平成24年9月1日",jRS:"平成24年9月1日",jM:[{n:"藤田 恵",r:"世帯主",b:"1980-06-09"},{n:"藤田 悠",r:"子",b:"2007-08-17"}],sN:"藤田 悠",sS:SCHOOLS[2],sG:"3年",bB:"三井住友銀行",bR:"目白支店",bNo:"3322110",bH:"フジタ メグミ"}),
+  // R07-0001: 正常（○○学園中学校）
+  mk("R07-0001",0,"佐藤","美咲","サトウ","ミサキ","2012-04-15",3,2022,4,"佐藤","健一","サトウ","ケンイチ","父","東京都渋谷区神宮前2-3-4","みずほ銀行","渋谷支店","1234567","サトウ ケンイチ",420000),
+  // R07-0002: 正常（○○学園中学校）
+  mk("R07-0002",0,"高橋","さくら","タカハシ","サクラ","2011-09-03",3,2022,4,"高橋","誠","タカハシ","マコト","父","東京都渋谷区広尾1-2-3","三菱UFJ銀行","広尾支店","2345678","タカハシ マコト",420000),
+  // R07-0003: 正常（△△中学校）
+  mk("R07-0003",1,"吉田","陽菜","ヨシダ","ハルナ","2012-07-22",2,2023,4,"吉田","浩二","ヨシダ","コウジ","父","東京都新宿区新宿3-4-5","三井住友銀行","新宿支店","3456789","ヨシダ コウジ",396000),
+  // R07-0004: 正常（□□学院中学校）
+  mk("R07-0004",2,"山本","蒼","ヤマモト","アオ","2013-01-08",1,2024,4,"山本","智子","ヤマモト","トモコ","母","東京都港区芝5-6-7","りそな銀行","芝支店","4567890","ヤマモト トモコ",480000),
+  // R07-0005: 授業料外れ値 35,000円（○○学園中学校）
+  mk("R07-0005",0,"伊藤","蓮","イトウ","レン","2011-11-30",3,2022,4,"伊藤","直美","イトウ","ナオミ","母","東京都渋谷区渋谷1-2-3","みずほ銀行","渋谷支店","5678901","イトウ ナオミ",35000),
+  // R07-0006: 重複申請・母（△△中学校）加藤大翔
+  mk("R07-0006",1,"加藤","大翔","カトウ","ヒロト","2008-02-18",3,2022,4,"加藤","明美","カトウ","アケミ","母","東京都豊島区南大塚2-5-8","三菱UFJ銀行","池袋支店","6789012","カトウ アケミ",396000),
+  // R07-0007: 重複申請・父（△△中学校）加藤大翔
+  mk("R07-0007",1,"加藤","大翔","カトウ","ヒロト","2008-02-18",3,2022,4,"加藤","太郎","カトウ","タロウ","父","東京都豊島区南大塚2-5-8","三菱UFJ銀行","池袋支店","7890123","カトウ タロウ",396000),
+  // R07-0008: 姓不一致（○○学園中学校）生徒:鈴木 / 申請者:山田
+  mk("R07-0008",0,"鈴木","翔太","スズキ","ショウタ","2012-05-14",2,2023,4,"山田","裕子","ヤマダ","ユウコ","母","東京都渋谷区上原4-7-2","三井住友銀行","代々木支店","8901234","ヤマダ ユウコ",420000),
+  // R07-0009: 正常（△△中学校）
+  mk("R07-0009",1,"中村","悠真","ナカムラ","ユウマ","2012-03-11",2,2023,4,"中村","真理子","ナカムラ","マリコ","母","東京都豊島区西池袋1-3-7","りそな銀行","池袋支店","9012345","ナカムラ マリコ",396000),
+  // R07-0010: 正常（□□学院中学校）
+  mk("R07-0010",2,"松本","陽向","マツモト","ヒナタ","2013-06-25",1,2024,4,"松本","恵","マツモト","メグミ","母","東京都港区麻布十番2-1-4","三菱UFJ銀行","麻布支店","0123456","マツモト メグミ",480000),
 ];
 
-const DI={"住民票":"📋","生徒証":"🪪","通帳":"📒","カード":"💳"};
 const stCls={"未審査":"k-status-pending","審査中":"k-status-reviewing","承認":"k-status-approved","差戻し":"k-status-rejected"};
-
-function genSchoolResult(apps){
-  const issues=[],nm={};
-  apps.forEach(a=>{const k=a.student.lastName+a.student.firstName;(nm[k]=nm[k]||[]).push(a)});
-  Object.entries(nm).forEach(([n,l])=>{if(l.length>1)issues.push({type:"dup",title:`重複申請：「${n}」`,msg:`受付番号 ${l.map(a=>a.id).join(", ")} で同一生徒名。`,ids:l.map(a=>a.id)})});
-  const freq={};apps.forEach(a=>freq[a.tuition.annual]=(freq[a.tuition.annual]||0)+1);
-  const mode=+Object.entries(freq).sort((a,b)=>b[1]-a[1])[0][0];
-  const out=apps.filter(a=>a.tuition.annual!==mode);
-  if(out.length>0&&out.length<apps.length/2)issues.push({type:"tuit",title:"授業料の外れ値",msg:`多数派${mode.toLocaleString()}円に対し${out.map(a=>`${a.student.lastName}${a.student.firstName}(${a.id})=${a.tuition.annual.toLocaleString()}円`).join("、")}。`,ids:out.map(a=>a.id)});
-  return issues;
-}
 
 function App(){
   const[page,setPage]=useState("dash");
@@ -154,7 +131,7 @@ function App(){
   const[error,setError]=useState(null);
   const[schResult,setSchResult]=useState(null);
   const[schReviewing,setSchReviewing]=useState(false);
-
+  const[schProgress,setSchProgress]=useState(0);
   const filtered=useMemo(()=>schoolFilter?allApps.filter(a=>SCHOOLS[a.schoolIdx]===schoolFilter):allApps,[schoolFilter]);
   const schoolApps=useMemo(()=>schoolIdx!==null?allApps.filter(a=>a.schoolIdx===schoolIdx):[],[schoolIdx]);
   const curState=selApp?appStates[selApp.id]:null;
@@ -163,39 +140,56 @@ function App(){
   const goDetail=(app)=>{setSelApp(app);setPage("detail")};
   const goBack=()=>{if(page==="detail"){schoolIdx!==null?setPage("school"):setPage("dash")}else{setPage("dash");setSchoolIdx(null)}};
 
+  // 単体AI審査
   const runSingle=useCallback(async()=>{
     if(!selApp)return;setReviewing(true);setProgress(10);setError(null);
     setAppStates(p=>({...p,[selApp.id]:{...p[selApp.id],status:"審査中"}}));
     const intv=setInterval(()=>setProgress(p=>Math.min(p+8,85)),500);
     try{
-      const applicationData={student:{...selApp.student,schoolName:SCHOOLS[selApp.schoolIdx]},applicant:selApp.applicant,address:selApp.address,bank:selApp.bank,tuition:selApp.tuition,enrollment:selApp.enrollment};
-      const ocrData={住民票:{氏名:selApp.ocr.jN,住所:selApp.ocr.jA,発行日:selApp.ocr.jI,申請者住民日:selApp.ocr.jRA,生徒住民日:selApp.ocr.jRS,世帯員:selApp.ocr.jM.map(m=>({氏名:m.n,続柄:m.r,生年月日:m.b}))},生徒証:{氏名:selApp.ocr.sN,学校名:selApp.ocr.sS,学年:selApp.ocr.sG},口座書類:{金融機関:selApp.ocr.bB,支店名:selApp.ocr.bR,口座番号:selApp.ocr.bNo,名義人:selApp.ocr.bH}};
-      const res=await fetch('/api/review',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({applicationData,ocrData,checkItems:CHECK_ITEMS})});
+      const applicationData={
+        受付番号:selApp.id,
+        学校名:SCHOOLS[selApp.schoolIdx],
+        生徒姓:selApp.student.lastName,生徒名:selApp.student.firstName,生徒姓カナ:selApp.student.lastNameKana,生徒名カナ:selApp.student.firstNameKana,
+        生年月日:selApp.student.birthDate,学年:selApp.student.grade,入学年:selApp.student.enrollYear,入学月:selApp.student.enrollMonth,
+        申請者姓:selApp.applicant.lastName,申請者名:selApp.applicant.firstName,申請者姓カナ:selApp.applicant.lastNameKana,申請者名カナ:selApp.applicant.firstNameKana,
+        続柄:selApp.applicant.relationship,住所:selApp.applicant.address,
+        銀行名:selApp.bank.bankName,支店名:selApp.bank.branchName,口座番号:selApp.bank.accountNumber,口座名義カナ:selApp.bank.holderKana,
+        年間授業料:selApp.tuition.annual
+      };
+      const res=await fetch('/api/review',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({applicationData})});
       clearInterval(intv);setProgress(100);
       if(!res.ok){const e=await res.json();throw new Error(e.error||'API error')}
       const result=await res.json();
       const flagText=(result.findings||[]).filter(f=>f.severity==="error").map(f=>f.category).join("、")||(result.findings||[]).filter(f=>f.severity==="warning").map(f=>f.category).join("、")||"";
-      setAppStates(p=>({...p,[selApp.id]:{status:result.overall==="OK"?"承認":"差戻し",flag:flagText,result:{...result,ocr:selApp.ocr}}}));
+      setAppStates(p=>({...p,[selApp.id]:{status:result.overall==="OK"?"承認":"差戻し",flag:flagText,result}}));
     }catch(err){clearInterval(intv);setError(err.message);setAppStates(p=>({...p,[selApp.id]:{...p[selApp.id],status:"未審査"}}));}
     setReviewing(false);setProgress(0);
     setTimeout(()=>document.getElementById("res")?.scrollIntoView({behavior:"smooth"}),200);
   },[selApp]);
 
+  // 横断AI審査（学校単位）
   const runSchool=useCallback(async()=>{
-    setSchReviewing(true);await new Promise(r=>setTimeout(r,1500));
-    const sr=genSchoolResult(schoolApps);
-    const flaggedIds={};
-    sr.forEach(issue=>issue.ids.forEach(id=>{flaggedIds[id]=(flaggedIds[id]||[]).concat(issue.title)}));
-    setAppStates(p=>{const n={...p};Object.entries(flaggedIds).forEach(([id,titles])=>{n[id]={...n[id],flag:titles.join("、")}});return n});
-    setSchResult(sr);setSchReviewing(false);
-  },[schoolApps]);
+    setSchReviewing(true);setSchProgress(10);setError(null);
+    const intv=setInterval(()=>setSchProgress(p=>Math.min(p+6,85)),500);
+    try{
+      const apps=schoolApps.map(a=>({受付番号:a.id,生徒姓:a.student.lastName,生徒名:a.student.firstName,生年月日:a.student.birthDate,申請者姓:a.applicant.lastName,申請者名:a.applicant.firstName,続柄:a.applicant.relationship,年間授業料:a.tuition.annual}));
+      const res=await fetch('/api/review-school',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({schoolName:SCHOOLS[schoolIdx],applications:apps})});
+      clearInterval(intv);setSchProgress(100);
+      if(!res.ok){const e=await res.json();throw new Error(e.error||'API error')}
+      const result=await res.json();
+      const flaggedIds={};
+      (result.issues||[]).forEach(issue=>(issue.ids||[]).forEach(id=>{flaggedIds[id]=(flaggedIds[id]||[]).concat(issue.title)}));
+      setAppStates(p=>{const n={...p};Object.entries(flaggedIds).forEach(([id,titles])=>{n[id]={...n[id],flag:titles.join("、")}});return n});
+      setSchResult(result.issues||[]);
+    }catch(err){clearInterval(intv);setError(err.message)}
+    setSchReviewing(false);setSchProgress(0);
+  },[schoolApps,schoolIdx]);
 
   return(
     <div style={{minHeight:"100vh",background:"#f5f6f7"}}>
-      {/* HEADER */}
       <div className="k-header">
         <div className="k-header-bar"/>
-        {page!=="dash"&&<button className="k-back" onClick={goBack}>‹</button>}
+        {page!=="dash"&&<button className="k-back" onClick={goBack}>&#8249;</button>}
         <span className="k-header-title">AI審査システム</span>
         <span className="k-header-sub">
           {page==="dash"&&"レコード一覧"}
@@ -216,9 +210,9 @@ function App(){
           <span style={{flex:1}}/>
           <span style={{fontSize:12,color:"#999"}}>{filtered.length}件</span>
         </div>
-        <div style={{overflow:"auto"}}>
+        <div>
           <table className="k-table">
-            <thead><tr><th className="row-num">#</th><th>ステータス</th><th>受付番号</th><th>学校名</th><th>生徒名漢字</th><th>申請者名漢字</th><th>審査フラグ</th><th>レコード番号</th></tr></thead>
+            <thead><tr><th className="row-num">#</th><th>ステータス</th><th>受付番号</th><th>学校名</th><th>生徒名</th><th>申請者名</th><th>年間授業料</th><th>審査フラグ</th></tr></thead>
             <tbody>{filtered.map((a,i)=>{const st=appStates[a.id];return(
               <tr key={a.id} onClick={()=>goDetail(a)}>
                 <td className="row-num">{i+1}</td>
@@ -227,8 +221,8 @@ function App(){
                 <td>{SCHOOLS[a.schoolIdx]}</td>
                 <td style={{fontWeight:500}}>{a.student.lastName} {a.student.firstName}</td>
                 <td>{a.applicant.lastName} {a.applicant.firstName}</td>
+                <td style={{textAlign:"right"}}>{a.tuition.annual.toLocaleString()}円</td>
                 <td>{st.flag?<span className="k-flag">{st.flag}</span>:<span style={{color:"#ccc"}}>—</span>}</td>
-                <td style={{color:"#999"}}>{a.recNo}</td>
               </tr>)})}</tbody>
           </table>
         </div>
@@ -237,15 +231,15 @@ function App(){
       {/* SCHOOL */}
       {page==="school"&&<>
         <div className="k-nav">
-          <span style={{fontWeight:700}}>🏫 {SCHOOLS[schoolIdx]}</span>
+          <span style={{fontWeight:700}}>{SCHOOLS[schoolIdx]}</span>
           <span style={{fontSize:12,color:"#999"}}>（{schoolApps.length}件）</span>
           <span style={{flex:1}}/>
-          <button className="k-nav-btn primary" onClick={runSchool} disabled={schReviewing}>{schReviewing?"チェック中...":"🔍 一括チェック"}</button>
+          <button className="k-nav-btn primary" onClick={runSchool} disabled={schReviewing}>{schReviewing?"AI横断チェック中...":"AI横断チェック"}</button>
         </div>
-        <div style={{overflow:"auto"}}>
+        <div>
           <table className="k-table">
-            <thead><tr><th className="row-num">#</th><th>ステータス</th><th>受付番号</th><th>生徒名</th><th>学年</th><th>申請者</th><th>続柄</th><th>年間授業料</th><th>審査フラグ</th><th>レコード</th></tr></thead>
-            <tbody>{schoolApps.map((a,i)=>{const st=appStates[a.id];const isO=schResult?.some(r=>r.type==="tuit"&&r.ids.includes(a.id));const isD=schResult?.some(r=>r.type==="dup"&&r.ids.includes(a.id));return(
+            <thead><tr><th className="row-num">#</th><th>ステータス</th><th>受付番号</th><th>生徒名</th><th>学年</th><th>申請者</th><th>続柄</th><th>年間授業料</th><th>審査フラグ</th></tr></thead>
+            <tbody>{schoolApps.map((a,i)=>{const st=appStates[a.id];const isO=schResult?.some(r=>r.type==="tuition_outlier"&&r.ids?.includes(a.id));const isD=schResult?.some(r=>r.type==="duplicate"&&r.ids?.includes(a.id));return(
               <tr key={a.id} onClick={()=>goDetail(a)} className={(isO||isD)?"row-highlight":""}>
                 <td className="row-num">{i+1}</td>
                 <td><span className={`k-status ${stCls[st.status]}`}>{st.status}</span></td>
@@ -254,16 +248,16 @@ function App(){
                 <td>{a.student.grade}年</td>
                 <td>{a.applicant.lastName} {a.applicant.firstName}</td>
                 <td>{a.applicant.relationship}</td>
-                <td style={{fontWeight:isO?700:400,color:isO?"#c0392b":"#333"}}>{a.tuition.annual.toLocaleString()}円{isO&&<span className="k-flag" style={{marginLeft:4}}>外れ値</span>}</td>
+                <td style={{fontWeight:isO?700:400,color:isO?"#c0392b":"#333",textAlign:"right"}}>{a.tuition.annual.toLocaleString()}円{isO&&<span className="k-flag" style={{marginLeft:4}}>外れ値</span>}</td>
                 <td>{st.flag?<span className="k-flag">{st.flag}</span>:"—"}</td>
-                <td style={{color:"#999"}}>{a.recNo}</td>
               </tr>)})}</tbody>
           </table>
         </div>
-        {schReviewing&&<div className="k-progress" style={{margin:16}}><Sp/><span style={{marginLeft:8,fontSize:12,color:"#2980b9",fontWeight:600}}>横断チェック中...</span></div>}
+        {schReviewing&&<div className="k-progress" style={{margin:16}}><div style={{display:"flex",alignItems:"center",gap:8}}><Sp/><span style={{fontSize:12,fontWeight:600,color:"#2980b9"}}>OpenAI APIで横断チェック中...</span></div><div className="k-progress-bar"><div className="k-progress-fill" style={{width:`${schProgress}%`}}/></div></div>}
+        {error&&!schReviewing&&<div style={{margin:16,background:"#fdf0ef",border:"1px solid #f5b7b1",borderRadius:4,padding:12,color:"#c0392b",fontSize:12}}>エラー：{error}</div>}
         {schResult&&!schReviewing&&<div style={{padding:16}}>
-          <div className="k-result-divider"><div className="line"/><div className="label">🤖 学校単位チェック結果</div><div className="line"/></div>
-          {schResult.length===0?<div className="k-group" style={{padding:16,color:"#27ae60",fontWeight:600}}>✓ 問題は検出されませんでした。</div>:schResult.map((is,i)=><div key={i} className="k-finding k-finding-error" style={{margin:"0 0 8px"}}><div style={{fontWeight:700,marginBottom:4}}><span className="k-flag" style={{marginRight:6}}>要確認</span>{is.title}</div><div style={{fontSize:12,lineHeight:1.7,color:"#555"}}>{is.msg}</div><div style={{marginTop:4,fontSize:11,color:"#999"}}>該当：{is.ids.map(id=><span key={id} className="k-flag" style={{marginRight:3}}>{id}</span>)}</div></div>)}
+          <div className="k-result-divider"><div className="line"/><div className="label">AI横断チェック結果</div><div className="line"/></div>
+          {schResult.length===0?<div className="k-group" style={{padding:16,color:"#27ae60",fontWeight:600}}>問題は検出されませんでした。</div>:schResult.map((is,i)=><div key={i} className="k-finding k-finding-error" style={{margin:"0 0 8px"}}><div style={{fontWeight:700,marginBottom:4}}><span className="k-flag" style={{marginRight:6}}>要確認</span>{is.title}</div><div style={{fontSize:12,lineHeight:1.7,color:"#555"}}>{is.message}</div><div style={{marginTop:4,fontSize:11,color:"#999"}}>該当：{(is.ids||[]).map(id=><span key={id} className="k-flag" style={{marginRight:3}}>{id}</span>)}</div></div>)}
         </div>}
       </>}
 
@@ -272,38 +266,27 @@ function App(){
         <div className="k-detail-header">
           <div>
             <div style={{fontSize:18,fontWeight:700}}>{selApp.student.lastName} {selApp.student.firstName}<span style={{fontSize:12,color:"#999",marginLeft:8,fontWeight:400}}>{selApp.id}</span></div>
-            <div style={{fontSize:12,color:"#999",marginTop:2}}>{SCHOOLS[selApp.schoolIdx]}　{selApp.student.grade}年　{selApp.recNo}</div>
+            <div style={{fontSize:12,color:"#999",marginTop:2}}>{SCHOOLS[selApp.schoolIdx]}　{selApp.student.grade}年</div>
           </div>
-          <button className="k-nav-btn primary" onClick={runSingle} disabled={reviewing}>{reviewing?"審査中...":"🔍 AI審査を実行"}</button>
+          <button className="k-nav-btn primary" onClick={runSingle} disabled={reviewing}>{reviewing?"審査中...":"AI審査を実行"}</button>
         </div>
 
         <KGroup title="生徒情報" fields={[["姓",selApp.student.lastName],["名",selApp.student.firstName],["姓（カナ）",selApp.student.lastNameKana],["名（カナ）",selApp.student.firstNameKana],["生年月日",selApp.student.birthDate],["学校名",SCHOOLS[selApp.schoolIdx]],["学年",selApp.student.grade+"年"],["入学年度",selApp.student.enrollYear+"年"],["入学月",selApp.student.enrollMonth+"月"]]} warns={curState?.result?.findings}/>
-        <KGroup title="申請者情報" fields={[["姓",selApp.applicant.lastName],["名",selApp.applicant.firstName],["姓（カナ）",selApp.applicant.lastNameKana],["名（カナ）",selApp.applicant.firstNameKana],["生徒との関係",selApp.applicant.relationship]]} warns={curState?.result?.findings}/>
-        <KGroup title="申請者住所" fields={[["郵便番号",selApp.address.postalCode],["都道府県",selApp.address.prefecture],["区市町村",selApp.address.city],["町域",selApp.address.town],["丁目・番地",selApp.address.street],["建物名",selApp.address.building||"—"],["自宅電話番号",selApp.address.homePhone||"（未記入）"],["日中連絡先",selApp.address.dayPhone],["連絡先氏名",selApp.address.dayContactName]]} warns={curState?.result?.findings}/>
-        <KGroup title="口座情報" fields={[["金融機関名",selApp.bank.bankName],["支店名",selApp.bank.branchName],["預金種目",selApp.bank.accountType],["口座番号",selApp.bank.accountNumber],["名義人姓（カナ）",selApp.bank.holderLastNameKana],["名義人名（カナ）",selApp.bank.holderFirstNameKana]]} warns={curState?.result?.findings}/>
-        <KGroup title="授業料・金額" fields={[["年間授業料",selApp.tuition.annual.toLocaleString()+"円"],["決定額",selApp.tuition.determined.toLocaleString()+"円"],["確定額",selApp.tuition.confirmed.toLocaleString()+"円"],["保護者口座振込額",selApp.tuition.transfer.toLocaleString()+"円"],["在籍確認",selApp.enrollment]]} warns={curState?.result?.findings}/>
+        <KGroup title="申請者情報" fields={[["姓",selApp.applicant.lastName],["名",selApp.applicant.firstName],["姓（カナ）",selApp.applicant.lastNameKana],["名（カナ）",selApp.applicant.firstNameKana],["続柄",selApp.applicant.relationship],["住所",selApp.applicant.address]]} warns={curState?.result?.findings}/>
+        <KGroup title="口座情報" fields={[["金融機関名",selApp.bank.bankName],["支店名",selApp.bank.branchName],["口座番号",selApp.bank.accountNumber],["口座名義カナ",selApp.bank.holderKana]]} warns={curState?.result?.findings}/>
+        <KGroup title="授業料" fields={[["年間授業料",selApp.tuition.annual.toLocaleString()+"円"]]} warns={curState?.result?.findings}/>
 
-        <div className="k-group"><div className="k-group-header">📎 添付書類</div><div style={{padding:12,display:"flex",gap:10}}>{selApp.docs.map((d,i)=><div key={i} className="k-doc"><div className="k-doc-preview"><span style={{fontSize:24}}>{DI[d]||"📄"}</span><span style={{fontSize:11,color:"#666",fontWeight:600}}>{d}</span></div></div>)}</div></div>
+        {reviewing&&<div className="k-progress"><div style={{display:"flex",alignItems:"center",gap:8}}><Sp/><span style={{fontSize:12,fontWeight:600,color:"#2980b9"}}>{progress<30?"申請データを確認中...":progress<60?"OpenAI APIで審査中...":progress<90?"分析中...":"結果生成中..."}</span></div><div className="k-progress-bar"><div className="k-progress-fill" style={{width:`${progress}%`}}/></div></div>}
 
-        {reviewing&&<div className="k-progress"><div style={{display:"flex",alignItems:"center",gap:8}}><Sp/><span style={{fontSize:12,fontWeight:600,color:"#2980b9"}}>{progress<30?"書類をOCR読取中...":progress<60?"Gemini APIで照合中...":progress<90?"分析中...":"結果生成中..."}</span></div><div className="k-progress-bar"><div className="k-progress-fill" style={{width:`${progress}%`}}/></div></div>}
-
-        {error&&<div style={{background:"#fdf0ef",border:"1px solid #f5b7b1",borderRadius:4,padding:12,marginBottom:12,color:"#c0392b",fontSize:12}}>⚠ エラー：{error}</div>}
+        {error&&!reviewing&&<div style={{background:"#fdf0ef",border:"1px solid #f5b7b1",borderRadius:4,padding:12,marginBottom:12,color:"#c0392b",fontSize:12}}>エラー：{error}</div>}
 
         {curState?.result&&!reviewing&&<div id="res">
-          <div className="k-result-divider"><div className="line"/><div className="label">🤖 AI審査結果（Gemini）</div><div className="line"/></div>
+          <div className="k-result-divider"><div className="line"/><div className="label">AI審査結果（OpenAI）</div><div className="line"/></div>
           <div style={{display:"flex",gap:12,marginBottom:12}}>
             <div className="k-score"><div className={`k-score-num ${curState.result.overall!=="OK"?"warn":""}`}>{curState.result.score}</div><div style={{fontSize:10,color:"#999"}}>スコア</div><div style={{marginTop:4}}><span className={`k-status ${curState.result.overall==="OK"?"k-status-approved":"k-status-rejected"}`}>{curState.result.overall}</span></div></div>
-            <div className="k-group" style={{flex:1,marginBottom:0}}><div className="k-group-header">🤖 AI総合コメント</div><div style={{padding:12,fontSize:13,lineHeight:1.7}}>{curState.result.summary}</div></div>
+            <div className="k-group" style={{flex:1,marginBottom:0}}><div className="k-group-header">AI総合コメント</div><div style={{padding:12,fontSize:13,lineHeight:1.7}}>{curState.result.summary}</div></div>
           </div>
-
-          <div className="k-group"><div className="k-group-header">🔍 検出事項</div><div style={{padding:10}}>{(curState.result.findings||[]).map((f,i)=><div key={i} className={`k-finding k-finding-${f.severity}`}><div style={{display:"flex",alignItems:"center",gap:6,marginBottom:3}}><span className="k-flag" style={{background:f.severity==="error"?"#fdf0ef":f.severity==="warning"?"#fef9f0":"#e8f4fd",color:f.severity==="error"?"#c0392b":f.severity==="warning"?"#e67e22":"#2980b9"}}>{f.severity==="error"?"不整合":f.severity==="warning"?"確認推奨":"情報"}</span><span style={{fontSize:11,color:"#666"}}>{f.category}</span>{f.field&&<span style={{fontSize:10,color:"#999",background:"#f5f6f7",padding:"1px 5px",borderRadius:3}}>{f.field}</span>}</div><div style={{fontSize:12,lineHeight:1.7,color:"#555",paddingLeft:8}}>{f.message}</div></div>)}</div></div>
-
-          {curState.result.matchResults&&<div className="k-group"><div className="k-group-header">📄 OCR照合結果</div><div style={{padding:12}}>
-            <div style={{display:"flex",gap:10,marginBottom:12}}>{Object.entries(curState.result.matchResults).map(([k,v])=>{const lb={juuminhyo:"住民票",studentId:"生徒証",bankDoc:"口座書類"};const ok=v==="一致";return<div key={k} className={`k-match ${ok?"k-match-ok":"k-match-ng"}`}><div style={{fontSize:11,color:"#666"}}>{lb[k]}</div><div style={{fontSize:13,fontWeight:700,color:ok?"#27ae60":"#e67e22"}}>{v}</div></div>})}</div>
-            <KOcrSub title="住民票" items={[{l:"氏名",v:curState.result.ocr.jN},{l:"住所",v:curState.result.ocr.jA},{l:"発行日",v:curState.result.ocr.jI},{l:"申請者住民日",v:curState.result.ocr.jRA},{l:"生徒住民日",v:curState.result.ocr.jRS}]} members={curState.result.ocr.jM}/>
-            <KOcrSub title="生徒証" items={[{l:"氏名",v:curState.result.ocr.sN},{l:"学校名",v:curState.result.ocr.sS},{l:"学年",v:curState.result.ocr.sG}]}/>
-            <KOcrSub title="口座書類" items={[{l:"金融機関",v:curState.result.ocr.bB},{l:"支店名",v:curState.result.ocr.bR},{l:"口座番号",v:curState.result.ocr.bNo,x:curState.result.ocr.xN},{l:"名義人",v:curState.result.ocr.bH,x:curState.result.ocr.xH}]}/>
-          </div></div>}
+          <div className="k-group"><div className="k-group-header">検出事項</div><div style={{padding:10}}>{(curState.result.findings||[]).map((f,i)=><div key={i} className={`k-finding k-finding-${f.severity}`}><div style={{display:"flex",alignItems:"center",gap:6,marginBottom:3}}><span className="k-flag" style={{background:f.severity==="error"?"#fdf0ef":f.severity==="warning"?"#fef9f0":"#e8f4fd",color:f.severity==="error"?"#c0392b":f.severity==="warning"?"#e67e22":"#2980b9"}}>{f.severity==="error"?"不整合":f.severity==="warning"?"確認推奨":"情報"}</span><span style={{fontSize:11,color:"#666"}}>{f.category}</span>{f.field&&<span style={{fontSize:10,color:"#999",background:"#f5f6f7",padding:"1px 5px",borderRadius:3}}>{f.field}</span>}</div><div style={{fontSize:12,lineHeight:1.7,color:"#555",paddingLeft:8}}>{f.message}</div></div>)}</div></div>
         </div>}
         <div style={{height:30}}/>
       </div>}
@@ -314,15 +297,7 @@ function App(){
 function KGroup({title,fields,warns}){
   const[open,setOpen]=useState(true);
   const wf=(warns||[]).filter(w=>w.field).map(w=>w.field);
-  return<div className="k-group"><div className="k-group-header" onClick={()=>setOpen(!open)}><span style={{fontSize:10,color:"#999"}}>{open?"▼":"▶"}</span>{title}</div>{open&&<div className="k-group-body">{fields.map(([l,v],i)=>{const hit=wf.some(x=>x&&(l.includes(x)||x.includes(l)));return<div key={i} className={`k-field-row ${hit?"k-field-warn":""}`}><div className="k-field-label">{l}{hit&&" ⚠"}</div><div className="k-field-value">{v}</div></div>})}</div>}</div>
-}
-
-function KOcrSub({title,items,members}){
-  return<div style={{background:"#fafbfc",border:"1px solid #f0f1f4",borderRadius:4,padding:10,marginBottom:8}}>
-    <div style={{fontSize:12,fontWeight:600,color:"#666",marginBottom:6}}>{title}</div>
-    {items.map((it,i)=><div key={i} className={`k-field-row ${it.x?"k-field-warn":""}`} style={{borderBottom:"1px solid #f0f1f4"}}><div className="k-field-label" style={{width:120,minWidth:120,fontSize:11}}>{it.l}</div><div className="k-field-value" style={{fontSize:12}}>{it.v}</div></div>)}
-    {members&&<div style={{marginTop:6}}><div style={{fontSize:11,fontWeight:600,color:"#666",marginBottom:4}}>世帯員</div><table style={{width:"100%",borderCollapse:"collapse",fontSize:11}}><thead><tr>{["氏名","続柄","生年月日"].map(h=><th key={h} style={{textAlign:"left",padding:"4px 8px",borderBottom:"1px solid #e3e7ee",color:"#999",fontSize:10}}>{h}</th>)}</tr></thead><tbody>{members.map((m,i)=><tr key={i} style={{borderBottom:"1px solid #f0f1f4"}}><td style={{padding:"4px 8px",color:m.x?"#e67e22":"#333",fontWeight:m.x?600:400}}>{m.n}{m.x&&" ⚠"}</td><td style={{padding:"4px 8px",color:"#555"}}>{m.r}</td><td style={{padding:"4px 8px",color:"#555"}}>{m.b}</td></tr>)}</tbody></table></div>}
-  </div>
+  return<div className="k-group"><div className="k-group-header" onClick={()=>setOpen(!open)}><span style={{fontSize:10,color:"#999"}}>{open?"▼":"▶"}</span>{title}</div>{open&&<div className="k-group-body">{fields.map(([l,v],i)=>{const hit=wf.some(x=>x&&(l.includes(x)||x.includes(l)));return<div key={i} className={`k-field-row ${hit?"k-field-warn":""}`}><div className="k-field-label">{l}</div><div className="k-field-value">{v}</div></div>})}</div>}</div>
 }
 
 function Sp(){return<span style={{display:"inline-block",width:14,height:14,border:"2px solid #a9d4f5",borderTopColor:"#3498db",borderRadius:"50%",animation:"spin 0.8s linear infinite"}}/>}

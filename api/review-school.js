@@ -34,33 +34,28 @@ export default async function handler(req, res) {
   if (!apiKey) return res.status(500).json({ error: 'OPENAI_API_KEY not configured' });
 
   try {
-    const { applicationData } = req.body;
+    const { schoolName, applications } = req.body;
 
-    const prompt = `あなたは私立中学校授業料支援助成金の審査AIです。以下の申請データを審査してください。
+    const prompt = `あなたは私立中学校授業料支援助成金の審査AIです。同一学校「${schoolName}」の申請データ${applications.length}件を横断的にチェックしてください。
 
-## 審査チェック項目（すべて確認すること）
-1. 学年整合性：学年・入学年月が生年月日と矛盾しないか（例：中1なら入学年に12〜13歳であるべき）
-2. 姓の一致：生徒の姓と申請者の姓が異なる場合は要確認（再婚等の可能性はあるがフラグを立てる）
-3. 続柄確認：続柄が「父」または「母」になっているか（祖父母等は要確認）
-4. 口座名義：口座名義カナが「申請者姓カナ＋スペース＋申請者名カナ」と一致するか
-5. 授業料妥当性：年間授業料が極端に低い（10万円未満）または高い（200万円超）でないか
+## 横断チェック項目
+1. 授業料外れ値：同一学校内の年間授業料の中央値を求め、中央値の±70%を超える申請はerror、±30%を超える申請はwarningとする
+2. 重複申請：生徒の姓名＋生年月日が完全一致する申請が複数ある場合、重複として検出する
 
-## 申請データ
-${JSON.stringify(applicationData, null, 2)}
+## 申請データ一覧
+${JSON.stringify(applications, null, 2)}
 
 ## 回答形式
 以下のJSON形式で回答してください。JSON以外は出力しないでください。
+問題がなければ issues は空配列にしてください。
 
 {
-  "overall": "OK" または "要確認",
-  "score": 0〜100の整数,
-  "summary": "総合コメント（日本語で2-3文）",
-  "findings": [
+  "issues": [
     {
-      "severity": "error" または "warning" または "info",
-      "category": "カテゴリ名",
-      "message": "詳細メッセージ（日本語）",
-      "field": "該当フィールド名 または null"
+      "type": "tuition_outlier" または "duplicate",
+      "title": "問題のタイトル（日本語）",
+      "message": "詳細な説明（日本語、具体的な数値や受付番号を含めること）",
+      "ids": ["該当する受付番号の配列"]
     }
   ]
 }`;
