@@ -208,7 +208,7 @@ function App(){
             <option value="">すべて（{allApps.length}件）</option>
             {SCHOOLS.map(s=><option key={s} value={s}>{s}（{allApps.filter(a=>SCHOOLS[a.schoolIdx]===s).length}件）</option>)}
           </select>
-          {schoolFilter&&<button className="k-nav-btn" onClick={()=>goSchool(SCHOOLS.indexOf(schoolFilter))}>学校単位チェック →</button>}
+          {schoolFilter&&<button className="k-nav-btn" onClick={()=>goSchool(SCHOOLS.indexOf(schoolFilter))}>グループ審査 →</button>}
           <span style={{flex:1}}/>
           <span style={{fontSize:12,color:"#999"}}>{filtered.length}件</span>
         </div>
@@ -238,7 +238,7 @@ function App(){
           <span style={{fontWeight:700}}>{SCHOOLS[schoolIdx]}</span>
           <span style={{fontSize:12,color:"#999"}}>（{schoolApps.length}件）</span>
           <span style={{flex:1}}/>
-          <button className="k-nav-btn primary" onClick={runSchool} disabled={schReviewing}>{schReviewing?"AI横断チェック中...":"AI横断チェック"}</button>
+          <button className="k-nav-btn primary" onClick={runSchool} disabled={schReviewing}>{schReviewing?"グループ審査中...":"グループ審査"}</button>
         </div>
         <div>
           <table className="k-table">
@@ -259,10 +259,10 @@ function App(){
               </tr>)})}</tbody>
           </table>
         </div>
-        {schReviewing&&<div className="k-progress" style={{margin:16}}><div style={{display:"flex",alignItems:"center",gap:8}}><Sp/><span style={{fontSize:12,fontWeight:600,color:"#2980b9"}}>OpenAI APIで横断チェック中...</span></div><div className="k-progress-bar"><div className="k-progress-fill" style={{width:`${schProgress}%`}}/></div></div>}
+        {schReviewing&&<div className="k-progress" style={{margin:16}}><div style={{display:"flex",alignItems:"center",gap:8}}><Sp/><span style={{fontSize:12,fontWeight:600,color:"#2980b9"}}>OpenAI APIでグループ審査中...</span></div><div className="k-progress-bar"><div className="k-progress-fill" style={{width:`${schProgress}%`}}/></div></div>}
         {error&&!schReviewing&&<div style={{margin:16,background:"#fdf0ef",border:"1px solid #f5b7b1",borderRadius:4,padding:12,color:"#c0392b",fontSize:12}}>エラー：{error}</div>}
         {schResult&&!schReviewing&&<div style={{padding:16}}>
-          <div className="k-result-divider"><div className="line"/><div className="label">AI横断チェック結果</div><div className="line"/></div>
+          <div className="k-result-divider"><div className="line"/><div className="label">グループ審査結果</div><div className="line"/></div>
           {schResult.length===0?<div className="k-group" style={{padding:16,color:"#27ae60",fontWeight:600}}>問題は検出されませんでした。</div>:schResult.map((is,i)=><div key={i} className="k-finding k-finding-error" style={{margin:"0 0 8px"}}><div style={{fontWeight:700,marginBottom:4}}><span className="k-flag" style={{marginRight:6}}>要確認</span>{is.title}</div><div style={{fontSize:12,lineHeight:1.7,color:"#555"}}>{is.message}</div><div style={{marginTop:4,fontSize:11,color:"#999"}}>該当：{(is.ids||[]).map(id=><span key={id} className="k-flag" style={{marginRight:3}}>{id}</span>)}</div></div>)}
         </div>}
       </>}
