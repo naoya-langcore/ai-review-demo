@@ -243,8 +243,8 @@ function App(){
         <div>
           <table className="k-table">
             <thead><tr><th className="row-num">#</th><th>ステータス</th><th>受付番号</th><th>生徒名</th><th>学年</th><th>申請者</th><th>続柄</th><th>在籍確認</th><th>年間授業料</th><th>助成額</th><th>審査フラグ</th></tr></thead>
-            <tbody>{schoolApps.map((a,i)=>{const st=appStates[a.id];const isO=schResult?.some(r=>r.type==="tuition_outlier"&&r.ids?.includes(a.id));const isD=schResult?.some(r=>r.type==="duplicate"&&r.ids?.includes(a.id));const isE=schResult?.some(r=>r.type==="enrollment_issue"&&r.ids?.includes(a.id));return(
-              <tr key={a.id} onClick={()=>goDetail(a)} className={(isO||isD||isE)?"row-highlight":""}>
+            <tbody>{schoolApps.map((a,i)=>{const st=appStates[a.id];const isO=schResult?.some(r=>r.type==="tuition_outlier"&&r.ids?.includes(a.id));const isD=schResult?.some(r=>r.type==="duplicate"&&r.ids?.includes(a.id));const isE=schResult?.some(r=>r.type==="enrollment_issue"&&r.ids?.includes(a.id));const isSC=schResult?.some(r=>r.type==="subsidy_over_cap"&&r.ids?.includes(a.id));const isST=schResult?.some(r=>r.type==="subsidy_over_tuition"&&r.ids?.includes(a.id));return(
+              <tr key={a.id} onClick={()=>goDetail(a)} className={(isO||isD||isE||isSC||isST)?"row-highlight":""}>
                 <td className="row-num">{i+1}</td>
                 <td><span className={`k-status ${stCls[st.status]}`}>{st.status}</span></td>
                 <td style={{fontWeight:600,color:"#3498db"}}>{a.id}</td>
@@ -254,7 +254,7 @@ function App(){
                 <td>{a.applicant.relationship}</td>
                 <td style={{color:a.enrollment.status!=="在籍中"?"#c0392b":"#333",fontWeight:a.enrollment.status!=="在籍中"?700:400}}>{a.enrollment.status}{isE&&<span className="k-flag" style={{marginLeft:4}}>要確認</span>}</td>
                 <td style={{fontWeight:isO?700:400,color:isO?"#c0392b":"#333",textAlign:"right"}}>{a.tuition.annual.toLocaleString()}円{isO&&<span className="k-flag" style={{marginLeft:4}}>外れ値</span>}</td>
-                <td style={{textAlign:"right"}}>{a.subsidy.amount.toLocaleString()}円</td>
+                <td style={{fontWeight:(isSC||isST)?700:400,color:(isSC||isST)?"#c0392b":"#333",textAlign:"right"}}>{a.subsidy.amount.toLocaleString()}円{isSC&&<span className="k-flag" style={{marginLeft:4}}>上限超過</span>}{isST&&<span className="k-flag" style={{marginLeft:4}}>授業料超過</span>}</td>
                 <td>{st.flag?<span className="k-flag">{st.flag}</span>:"—"}</td>
               </tr>)})}</tbody>
           </table>
