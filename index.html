@@ -114,6 +114,27 @@ body{font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN','Meiryo',sans-serif;
 
 /* Checkbox in table */
 .k-check{width:16px;height:16px;accent-color:#3498db;cursor:pointer}
+
+/* Review Checklist */
+.rv-checklist{border:1px solid #e3e7ee;border-radius:6px;overflow:hidden}
+.rv-item{display:flex;align-items:flex-start;padding:10px 12px;border-bottom:1px solid #f0f2f5;gap:10px;font-size:12px;transition:background 0.15s}
+.rv-item:last-child{border-bottom:none}
+.rv-item:hover{background:#fafbfc}
+.rv-icon{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px}
+.rv-icon-ok{background:#eafaf1;color:#27ae60}
+.rv-icon-error{background:#fdf0ef;color:#c0392b}
+.rv-icon-warn{background:#fef9f0;color:#e67e22}
+.rv-icon-skip{background:#f0f2f5;color:#aaa}
+.rv-body{flex:1;min-width:0}
+.rv-title{font-weight:600;color:#333;margin-bottom:2px}
+.rv-desc{color:#888;line-height:1.5;font-size:11px}
+.rv-msg{color:#555;line-height:1.6;margin-top:4px;padding:6px 8px;background:#f9fafb;border-radius:4px;font-size:11px}
+.rv-msg-error{background:#fdf0ef;color:#c0392b}
+.rv-msg-warn{background:#fef9f0;color:#856404}
+.rv-section-label{font-size:10px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:0.5px;padding:8px 12px 4px;background:#f9fafb}
+.rv-summary-bar{display:flex;gap:12px;padding:10px 12px;background:#f9fafb;border-radius:6px;margin-bottom:10px}
+.rv-summary-item{display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600}
+.rv-summary-dot{width:8px;height:8px;border-radius:50%}
 </style>
 </head>
 <body>
@@ -286,7 +307,8 @@ function App(){
       clearInterval(intv);setProgress(100);
       if(!res.ok){const e=await res.json();throw new Error(e.error||'API error')}
       const result=await res.json();
-      const flagText=(result.findings||[]).filter(f=>f.severity==="error").map(f=>f.category).join("、")||(result.findings||[]).filter(f=>f.severity==="warning").map(f=>f.category).join("、")||"";
+      const CKLABELS={"grade_consistency":"学年整合性","name_match":"姓の一致","relationship":"続柄確認","account_holder":"口座名義","enrollment":"在籍確認","tuition_range":"授業料妥当性","subsidy_cap":"助成額上限","subsidy_vs_tuition":"助成額対授業料","ocr_verification":"原本照合"};
+      const flagText=(result.checks||[]).filter(c=>c.result==="error").map(c=>CKLABELS[c.id]||c.id).join("、")||(result.checks||[]).filter(c=>c.result==="warning").map(c=>CKLABELS[c.id]||c.id).join("、")||"";
       setAppStates(p=>({...p,[selApp.id]:{status:result.overall==="OK"?"承認":"差戻し",flag:flagText,result}}));
     }catch(err){clearInterval(intv);setError(err.message);setAppStates(p=>({...p,[selApp.id]:{...p[selApp.id],status:"未審査"}}));}
     setReviewing(false);setProgress(0);
@@ -423,11 +445,38 @@ function App(){
               <div>ここに審査結果が表示されます</div>
             </div>}
 
-            {curState?.result&&!reviewing&&<div id="res">
-              <div className="k-score" style={{marginBottom:12}}><div className={`k-score-num ${curState.result.overall!=="OK"?"warn":""}`}>{curState.result.score}</div><div style={{fontSize:10,color:"#999"}}>スコア</div><div style={{marginTop:4}}><span className={`k-status ${curState.result.overall==="OK"?"k-status-approved":"k-status-rejected"}`}>{curState.result.overall}</span></div></div>
-              <div className="k-group" style={{marginBottom:12}}><div className="k-group-header">AI総合コメント</div><div style={{padding:12,fontSize:13,lineHeight:1.7}}>{curState.result.summary}</div></div>
-              <div className="k-group"><div className="k-group-header">検出事項（{(curState.result.findings||[]).length}件）</div><div style={{padding:10}}>{(curState.result.findings||[]).map((f,i)=><div key={i} className={`k-finding k-finding-${f.severity}`}><div style={{display:"flex",alignItems:"center",gap:6,marginBottom:3}}><span className="k-flag" style={{background:f.severity==="error"?"#fdf0ef":f.severity==="warning"?"#fef9f0":"#e8f4fd",color:f.severity==="error"?"#c0392b":f.severity==="warning"?"#e67e22":"#2980b9"}}>{f.severity==="error"?"不整合":f.severity==="warning"?"確認推奨":"情報"}</span><span style={{fontSize:11,color:"#666"}}>{f.category}</span>{f.field&&<span style={{fontSize:10,color:"#999",background:"#f5f6f7",padding:"1px 5px",borderRadius:3}}>{f.field}</span>}</div><div style={{fontSize:12,lineHeight:1.7,color:"#555",paddingLeft:8}}>{f.message}</div></div>)}</div></div>
-            </div>}
+            {curState?.result&&!reviewing&&(()=>{
+              const r=curState.result;
+              const checks=r.checks||[];
+              const LABELS={"grade_consistency":"学年整合性","name_match":"姓の一致","relationship":"続柄確認","account_holder":"口座名義確認","enrollment":"在籍確認","tuition_range":"授業料妥当性","subsidy_cap":"助成額上限チェック","subsidy_vs_tuition":"助成額対授業料チェック","ocr_verification":"提出書類の原本照合"};
+              const DESCS={"grade_consistency":"入学時年齢と学年の整合性","name_match":"生徒と申請者の姓が一致","relationship":"続柄が父または母","account_holder":"口座名義と申請者名の一致","enrollment":"在籍中であること","tuition_range":"年間授業料が10万〜200万円の範囲内","subsidy_cap":"助成額が制度上限10万円以内","subsidy_vs_tuition":"助成額が授業料以下","ocr_verification":"OCR読取結果と申請データの照合"};
+              const okCount=checks.filter(c=>c.result==="ok").length;
+              const errCount=checks.filter(c=>c.result==="error").length;
+              const warnCount=checks.filter(c=>c.result==="warning").length;
+              const skipCount=checks.filter(c=>c.result==="skip").length;
+              return<div id="res">
+                <div className="k-score" style={{marginBottom:12}}><div className={`k-score-num ${r.overall!=="OK"?"warn":""}`}>{r.score}</div><div style={{fontSize:10,color:"#999"}}>スコア</div><div style={{marginTop:4}}><span className={`k-status ${r.overall==="OK"?"k-status-approved":"k-status-rejected"}`}>{r.overall}</span></div></div>
+                <div className="rv-summary-bar">
+                  <div className="rv-summary-item"><div className="rv-summary-dot" style={{background:"#27ae60"}}/>{okCount}件 OK</div>
+                  {errCount>0&&<div className="rv-summary-item"><div className="rv-summary-dot" style={{background:"#c0392b"}}/>{errCount}件 不整合</div>}
+                  {warnCount>0&&<div className="rv-summary-item"><div className="rv-summary-dot" style={{background:"#e67e22"}}/>{warnCount}件 要確認</div>}
+                  {skipCount>0&&<div className="rv-summary-item"><div className="rv-summary-dot" style={{background:"#aaa"}}/>{skipCount}件 スキップ</div>}
+                </div>
+                <div className="k-group" style={{marginBottom:12}}><div className="k-group-header">AI総合コメント</div><div style={{padding:12,fontSize:13,lineHeight:1.7}}>{r.summary}</div></div>
+                <div className="k-group" style={{marginBottom:12}}><div className="k-group-header">審査チェック項目（{checks.length}項目）</div>
+                  <div className="rv-checklist">
+                    {checks.map((c,i)=><div key={i} className="rv-item">
+                      <div className={`rv-icon rv-icon-${c.result}`}>{c.result==="ok"?"✓":c.result==="error"?"✗":c.result==="warning"?"!":"—"}</div>
+                      <div className="rv-body">
+                        <div className="rv-title">{LABELS[c.id]||c.id}</div>
+                        <div className="rv-desc">{DESCS[c.id]||""}</div>
+                        {c.message&&<div className={`rv-msg ${c.result==="error"?"rv-msg-error":c.result==="warning"?"rv-msg-warn":""}`}>{c.message}</div>}
+                      </div>
+                    </div>)}
+                  </div>
+                </div>
+              </div>;
+            })()}
           </div>
         </div>
         <div style={{height:30}}/>
