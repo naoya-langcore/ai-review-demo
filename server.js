@@ -53,6 +53,29 @@ async function callOpenAI(apiKey, prompt) {
   return JSON.parse(text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim());
 }
 
+// OpenAI チャット呼び出し（テキスト応答）
+async function callOpenAIChat(apiKey, messages) {
+  const res = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${apiKey}`
+    },
+    body: JSON.stringify({
+      model: 'gpt-4o-mini',
+      messages,
+      temperature: 0.4,
+      max_tokens: 2048
+    })
+  });
+  if (!res.ok) {
+    const errText = await res.text();
+    throw new Error(`OpenAI API error: ${errText}`);
+  }
+  const data = await res.json();
+  return data.choices?.[0]?.message?.content || '';
+}
+
 // CORS ヘッダ設定
 function setCORS(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -216,9 +239,109 @@ ${JSON.stringify(applications, null, 2)}
   }
 }
 
+// チャット: POST /api/chat
+async function handleChat(req, res) {
+  setCORS(res);
+  if (req.method === 'OPTIONS') { res.writeHead(200); res.end(); return; }
+  if (req.method !== 'POST') { res.writeHead(405); res.end(JSON.stringify({ error: 'Method not allowed' })); return; }
+
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) { res.writeHead(500); res.end(JSON.stringify({ error: 'OPENAI_API_KEY not configured' })); return; }
+
+  try {
+    let body = '';
+    for await (const chunk of req) body += chunk;
+    const { messages, applications } = JSON.parse(body);
+
+    const dataSummary = applications.map(a =>
+      `${a.受付番号}: ${a.学校名||''} ${a.生徒姓}${a.生徒名} ${a.学年}年 授業料${a.年間授業料}円 助成額${a.助成額}円 在籍:${a.在籍確認}`
+    ).join('\n');
+
+    const systemMsg = `あなたは私立中学校授業料支援助成金の審査を支援するAIアシスタントです。
+ユーザーと対話しながら、審査の評価観点を一緒に検討します。
+
+## 対象データ概要（${applications.length}件）
+${dataSummary}
+
+## あなたの役割
+- ユーザーが指定した観点を整理し、具体的な審査基準に落とし込む
+- データの特徴を踏まえて追加の観点を提案する
+- 曖昧な指示があれば質問して明確にする
+- 簡潔に応答する（長くなりすぎない）
+
+まだ審査は実行しないでください。観点の整理と議論のみ行ってください。`;
+
+    const apiMessages = [
+      { role: 'system', content: systemMsg },
+      ...messages
+    ];
+
+    const reply = await callOpenAIChat(apiKey, apiMessages);
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ reply }));
+  } catch (err) {
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ error: 'Server error', message: err.message }));
+  }
+}
+
+// 会話を踏まえた審査: POST /api/review-with-context
+async function handleReviewWithContext(req, res) {
+  setCORS(res);
+  if (req.method === 'OPTIONS') { res.writeHead(200); res.end(); return; }
+  if (req.method !== 'POST') { res.writeHead(405); res.end(JSON.stringify({ error: 'Method not allowed' })); return; }
+
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) { res.writeHead(500); res.end(JSON.stringify({ error: 'OPENAI_API_KEY not configured' })); return; }
+
+  try {
+    let body = '';
+    for await (const chunk of req) body += chunk;
+    const { conversation, applications } = JSON.parse(body);
+
+    // 会話履歴からコンテキストを構成
+    const convText = conversation.map(m => `${m.role === 'user' ? 'ユーザー' : 'AI'}: ${m.content}`).join('\n');
+
+    const prompt = `あなたは私立中学校授業料支援助成金の審査AIです。
+ユーザーとの事前の対話で決定された評価観点に基づいて、以下の申請データを横断的に審査してください。
+
+## 事前の対話内容
+${convText}
+
+## 指示
+上記の対話で議論された評価観点・基準を抽出し、それに基づいて全申請データを審査してください。
+対話で明示的に言及された観点を最優先しつつ、基本的なチェック（重複、在籍確認、金額妥当性）も行ってください。
+
+## 申請データ一覧
+${JSON.stringify(applications, null, 2)}
+
+## 回答形式（JSON以外は出力しないでください）
+{
+  "appliedCriteria": ["実際に適用した評価観点のリスト"],
+  "issues": [
+    {
+      "type": "対話で決まったカテゴリ名 or duplicate/enrollment_issue/tuition_outlier/subsidy_over_cap/subsidy_over_tuition/custom",
+      "title": "問題のタイトル（日本語）",
+      "message": "具体的な数値や受付番号を含む詳細説明（日本語）",
+      "ids": ["該当する受付番号の配列"]
+    }
+  ]
+}`;
+
+    const result = await callOpenAI(apiKey, prompt);
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(result));
+  } catch (err) {
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ error: 'Server error', message: err.message }));
+  }
+}
+
 const server = http.createServer((req, res) => {
   if (req.url === '/api/review') { handleReview(req, res); return; }
   if (req.url === '/api/review-school') { handleReviewSchool(req, res); return; }
+  if (req.url === '/api/chat') { handleChat(req, res); return; }
+  if (req.url === '/api/review-with-context') { handleReviewWithContext(req, res); return; }
 
   // Static files
   let filePath = req.url === '/' ? '/index.html' : req.url;
