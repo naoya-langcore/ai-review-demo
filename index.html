@@ -206,15 +206,14 @@ function App(){
     年間授業料:a.tuition.annual,助成額:a.subsidy.amount
   })),[]);
 
-  // チャットを開く
-  const openChat=useCallback((scope)=>{
-    const apps=getChatApps(scope);
-    const scopeLabel=scope.type==="all"?`全${apps.length}件`:scope.type==="school"?`${SCHOOLS[scope.schoolIdx]}（${apps.length}件）`:`選択した${apps.length}件`;
-    setChatScope(scope);
-    setChatMessages([{role:"assistant",content:`${scopeLabel}の申請データを対象に審査を行います。\n\nどのような観点で審査しますか？\n例：\n・重複申請のチェック\n・金額の妥当性（授業料・助成額）\n・データの不自然なパターン\n・特定の条件に該当する申請の抽出\n\n審査で重視したいポイントを教えてください。`}]);
+  // チャットを開く（スコープは会話の中で決定）
+  const openChat=useCallback(()=>{
+    const schoolSummary=SCHOOLS.map((s,i)=>{const c=allApps.filter(a=>a.schoolIdx===i).length;return`  ・${s}（${c}件）`}).join('\n');
+    setChatScope({type:"all"}); // 初期は全件を渡す
+    setChatMessages([{role:"assistant",content:`複数審査を開始します。まず、どのような審査を行いたいですか？\n\n現在のデータ：全${allApps.length}件\n${schoolSummary}\n\n以下のような審査が可能です：\n・全件を横断してチェック（重複、不自然なパターンなど）\n・学校単位で審査（特定の学校に絞って詳しく確認）\n・特定の条件で対象を絞り込んで審査\n\nどのような範囲・観点で審査しますか？`}]);
     setChatReviewResult(null);
     setChatOpen(true);
-  },[getChatApps]);
+  },[]);
 
   const closeChat=useCallback(()=>{setChatOpen(false);setChatInput("");},[]);
 
@@ -335,16 +334,14 @@ function App(){
           </select>
           {schoolFilter&&<button className="k-nav-btn" onClick={()=>goSchool(SCHOOLS.indexOf(schoolFilter))}>学校詳細 →</button>}
           <span style={{flex:1}}/>
-          {selectedIds.size>0&&<button className="k-nav-btn primary" onClick={()=>openChat({type:"custom",appIds:[...selectedIds]})}>選択した{selectedIds.size}件を複数審査</button>}
-          <button className="k-nav-btn primary" onClick={()=>openChat({type:"all"})}>複数審査</button>
+          <button className="k-nav-btn primary" onClick={openChat}>複数審査</button>
           <span style={{fontSize:12,color:"#999"}}>{filtered.length}件</span>
         </div>
         <div>
           <table className="k-table">
-            <thead><tr><th style={{width:32,textAlign:"center"}}><input type="checkbox" className="k-check" checked={filtered.length>0&&filtered.every(a=>selectedIds.has(a.id))} onChange={()=>toggleSelectAll(filtered)}/></th><th className="row-num">#</th><th>ステータス</th><th>受付番号</th><th>学校名</th><th>生徒名</th><th>申請者名</th><th>在籍確認</th><th>年間授業料</th><th>助成額</th><th>審査フラグ</th></tr></thead>
+            <thead><tr><th className="row-num">#</th><th>ステータス</th><th>受付番号</th><th>学校名</th><th>生徒名</th><th>申請者名</th><th>在籍確認</th><th>年間授業料</th><th>助成額</th><th>審査フラグ</th></tr></thead>
             <tbody>{filtered.map((a,i)=>{const st=appStates[a.id];return(
               <tr key={a.id} onClick={()=>goDetail(a)}>
-                <td style={{textAlign:"center"}} onClick={e=>e.stopPropagation()}><input type="checkbox" className="k-check" checked={selectedIds.has(a.id)} onChange={e=>toggleSelect(a.id,e)}/></td>
                 <td className="row-num">{i+1}</td>
                 <td><span className={`k-status ${stCls[st.status]}`}>{st.status}</span></td>
                 <td style={{fontWeight:600,color:"#3498db"}}>{a.id}</td>
@@ -366,7 +363,7 @@ function App(){
           <span style={{fontWeight:700}}>{SCHOOLS[schoolIdx]}</span>
           <span style={{fontSize:12,color:"#999"}}>（{schoolApps.length}件）</span>
           <span style={{flex:1}}/>
-          <button className="k-nav-btn primary" onClick={()=>openChat({type:"school",schoolIdx})}>複数審査</button>
+          <button className="k-nav-btn primary" onClick={openChat}>複数審査</button>
         </div>
         <div>
           <table className="k-table">
@@ -440,7 +437,7 @@ function App(){
       <div className={`chat-panel ${chatOpen?"open":""}`}>
         <div className="chat-header">
           <span className="chat-header-title">AI審査チャット</span>
-          {chatScope&&<span className="chat-scope-badge">{chatScope.type==="all"?"全件横断":chatScope.type==="school"?SCHOOLS[chatScope.schoolIdx]:`${chatScope.appIds?.length}件選択`}</span>}
+          <span className="chat-scope-badge">全{allApps.length}件</span>
           <button className="chat-close" onClick={closeChat}>&times;</button>
         </div>
         <div className="chat-messages">
