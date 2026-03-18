@@ -449,7 +449,7 @@ function App(){
               const r=curState.result;
               const checks=r.checks||[];
               const LABELS={"grade_consistency":"学年整合性","name_match":"姓の一致","relationship":"続柄確認","account_holder":"口座名義確認","enrollment":"在籍確認","tuition_range":"授業料妥当性","subsidy_cap":"助成額上限チェック","subsidy_vs_tuition":"助成額対授業料チェック","ocr_verification":"提出書類の原本照合"};
-              const DESCS={"grade_consistency":"入学時年齢と学年の整合性","name_match":"生徒と申請者の姓が一致","relationship":"続柄が父または母","account_holder":"口座名義と申請者名の一致","enrollment":"在籍中であること","tuition_range":"年間授業料が10万〜200万円の範囲内","subsidy_cap":"助成額が制度上限10万円以内","subsidy_vs_tuition":"助成額が授業料以下","ocr_verification":"OCR読取結果と申請データの照合"};
+              const DESCS={"grade_consistency":"入学時年齢と学年の整合性","name_match":"生徒と申請者の姓が一致","relationship":"続柄が父または母","account_holder":"口座名義と申請者名の一致","enrollment":"在籍中であること","tuition_range":"年間授業料が10万〜200万円の範囲内","subsidy_cap":"助成額が制度上限10万円以内","subsidy_vs_tuition":"助成額が授業料以下","ocr_verification":"本番ではOCR読取結果と申請データを自動照合"};
               const okCount=checks.filter(c=>c.result==="ok").length;
               const errCount=checks.filter(c=>c.result==="error").length;
               const warnCount=checks.filter(c=>c.result==="warning").length;
@@ -460,15 +460,15 @@ function App(){
                   <div className="rv-summary-item"><div className="rv-summary-dot" style={{background:"#27ae60"}}/>{okCount}件 OK</div>
                   {errCount>0&&<div className="rv-summary-item"><div className="rv-summary-dot" style={{background:"#c0392b"}}/>{errCount}件 不整合</div>}
                   {warnCount>0&&<div className="rv-summary-item"><div className="rv-summary-dot" style={{background:"#e67e22"}}/>{warnCount}件 要確認</div>}
-                  {skipCount>0&&<div className="rv-summary-item"><div className="rv-summary-dot" style={{background:"#aaa"}}/>{skipCount}件 スキップ</div>}
+                  {skipCount>0&&<div className="rv-summary-item"><div className="rv-summary-dot" style={{background:"#aaa"}}/>{skipCount}件 未実装</div>}
                 </div>
                 <div className="k-group" style={{marginBottom:12}}><div className="k-group-header">AI総合コメント</div><div style={{padding:12,fontSize:13,lineHeight:1.7}}>{r.summary}</div></div>
                 <div className="k-group" style={{marginBottom:12}}><div className="k-group-header">審査チェック項目（{checks.length}項目）</div>
                   <div className="rv-checklist">
-                    {checks.map((c,i)=><div key={i} className="rv-item">
+                    {checks.map((c,i)=><div key={i} className="rv-item" style={c.result==="skip"?{background:"#f9fafb",opacity:0.85}:{}}>
                       <div className={`rv-icon rv-icon-${c.result}`}>{c.result==="ok"?"✓":c.result==="error"?"✗":c.result==="warning"?"!":"—"}</div>
                       <div className="rv-body">
-                        <div className="rv-title">{LABELS[c.id]||c.id}</div>
+                        <div className="rv-title">{LABELS[c.id]||c.id}{c.result==="skip"&&<span style={{marginLeft:6,fontSize:10,color:"#fff",background:"#aaa",padding:"1px 6px",borderRadius:8,fontWeight:600}}>本番実装予定</span>}</div>
                         <div className="rv-desc">{DESCS[c.id]||""}</div>
                         {c.message&&<div className={`rv-msg ${c.result==="error"?"rv-msg-error":c.result==="warning"?"rv-msg-warn":""}`}>{c.message}</div>}
                       </div>
